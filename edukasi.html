@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link rel="stylesheet" href="header.css"><script id="tailwind-config">try{
+        tailwind.config = { darkMode: "class", theme: { extend: {
+            "colors": {"surface-container-lowest": "#ffffff","on-tertiary-fixed-variant": "#00504A","tertiary-fixed": "#8EF4E9","on-secondary-fixed": "#241A00","surface-bright": "#FBF9F8","surface-container-high": "#EAE8E7","on-secondary": "#ffffff","tertiary": "#006A63","outline": "#737780","primary-container": "#752305","surface-container": "#F0EDED","background": "#FBF9F8","secondary-fixed": "#FFE087","surface": "#FBF9F8","surface-tint": "#9F4122","surface-variant": "#E4E2E1","error-container": "#ffdad6","primary-fixed": "#FFDBD0","outline-variant": "#c3c6d1","on-primary-fixed-variant": "#9F4122","error": "#ba1a1a","secondary-fixed-dim": "#FDD34D","surface-dim": "#DCD9D9","on-tertiary-fixed": "#00201D","on-error-container": "#93000a","secondary-container": "#FDD34D","on-primary-fixed": "#9F4122","on-tertiary-container": "#004842","on-surface": "#1B1C1C","surface-container-highest": "#E4E2E1","inverse-on-surface": "#f0f1f2","inverse-surface": "#2e3132","on-background": "#1B1C1C","on-tertiary": "#ffffff","on-secondary-container": "#574500","on-primary-container": "#FFDBD0","tertiary-container": "#8EF4E9","on-secondary-fixed-variant": "#574500","on-surface-variant": "#56423C","inverse-primary": "#FFB59E","primary-fixed-dim": "#FFB59E","primary": "#9F4122","surface-container-low": "#F5F3F3","on-error": "#ffffff","tertiary-fixed-dim": "#71D7CD","secondary": "#C99A2E","on-primary": "#ffffff"},
+            "borderRadius": {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+            "spacing": {"margin-desktop": "40px","margin-mobile": "16px","unit": "4px","gutter": "24px","container-max": "1280px"},
+            "fontFamily": {"headline-lg": ["Inter"],"headline-md": ["Inter"],"headline-xl": ["Inter"],"label-md": ["Inter"],"label-sm": ["Inter"],"body-lg": ["Inter"],"body-md": ["Inter"]},
+            "fontSize": {"headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}],"headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],"headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],"label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],"label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],"body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],"body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]}
+        }}}
+    }catch(_e){}</script></head><body class="bg-background text-on-surface">
+<div id="header-placeholder"></div>
+<main class="pt-24 pb-20 max-w-container-max mx-auto px-margin-desktop">
+<section class="mb-12 relative overflow-hidden rounded-3xl bg-primary py-16 px-12 text-on-primary">
+<div class="relative z-10 max-w-2xl">
+<span class="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm mb-4">Pusat Literasi PKK</span>
+<h1 class="font-headline-xl text-headline-xl mb-4">Pusat Sumber Daya Edukasi</h1>
+<p class="font-body-lg text-body-lg opacity-90">Akses koleksi dokumen, modul pelatihan, dan materi edukasi 10 Program Pokok PKK untuk kemajuan warga Sosromenduran.</p>
+</div>
+</section>
+<section class="mb-12">
+<div class="flex flex-col md:flex-row gap-gutter items-center justify-between p-6 rounded-2xl border border-outline-variant bg-white">
+<div class="relative w-full md:w-1/2">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none" placeholder="Cari dokumen atau materi edukasi..." type="text"/>
+</div>
+<div class="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0" id="edu-filters">
+<button class="filter-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-primary text-on-primary font-label-md text-label-md active" data-filter="all">Semua</button>
+<button class="filter-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-primary hover:text-primary transition-all" data-filter="Pokja I">Pokja I</button>
+<button class="filter-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-primary hover:text-primary transition-all" data-filter="Pokja II">Pokja II</button>
+<button class="filter-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-primary hover:text-primary transition-all" data-filter="Pokja III">Pokja III</button>
+<button class="filter-btn whitespace-nowrap px-6 py-2.5 rounded-full bg-surface-container border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:border-primary hover:text-primary transition-all" data-filter="Pokja IV">Pokja IV</button>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter" id="edu-grid"></section>
+</main>
+<div id="footer-placeholder"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+// ============================================================
+// SUMBER DATA EDUKASI — diambil dari Firebase (upload lewat halaman Admin > Kelola Konten)
+// ============================================================
+// Kalau Firebase belum disambungkan atau gagal diakses, otomatis fallback ke data contoh
+// di bawah (file lokal di assets/documents/) — jadi halaman ini gak akan pernah kosong.
+
+const DEMO_ITEMS = [
+    { cat: 'Pokja III', title: 'Flyer Gerakan Jogja Peduli Pangan', desc: 'Dokumen komprehensif mengenai strategi pelaksanaan program kesejahteraan keluarga tingkat kelurahan.', type: 'PDF', icon: 'description', file: 'assets/documents/gerakan-jogja-peduli-pangan.pdf', cover: '', source: 'local' },
+    { cat: 'Pokja IV', title: 'Modul Edukasi Stunting & Gizi Anak', desc: 'Pedoman praktis pencegahan stunting dan pola makan bergizi untuk balita.', type: 'PDF', icon: 'description', file: 'assets/documents/modul-stunting-gizi-anak.pdf', cover: '', source: 'local' },
+    { cat: 'Pokja II', title: 'Presentasi UP2K', desc: 'Materi pelatihan kewirausahaan mikro untuk ibu rumah tangga.', type: 'PPTX', icon: 'slideshow', file: 'assets/documents/presentasi-up2k.pptx', cover: 'assets/documents/covers/presentasi-up2k.jpg', source: 'local' },
+    { cat: 'Pokja III', title: 'Formulir Data Warga Dasawisma', desc: 'Template formulir pendataan warga untuk ketua kelompok Dasawisma.', type: 'DOCX', icon: 'assignment', file: 'assets/documents/formulir-data-dasawisma.docx', cover: 'assets/documents/covers/formulir-data-dasawisma.jpg', source: 'local' }
+];
+
+let materials = [];
+const grid = document.getElementById('edu-grid');
+
+function iconFor(type) {
+    const t = (type || '').toLowerCase();
+    if (t.indexOf('ppt') !== -1) return 'slideshow';
+    if (t.indexOf('doc') !== -1) return 'assignment';
+    return 'description';
+}
+
+function renderMaterials() {
+    grid.innerHTML = '';
+    if (materials.length === 0) {
+        grid.innerHTML = '<p class="text-on-surface-variant col-span-full text-center py-12">Belum ada materi.</p>';
+        return;
+    }
+    materials.forEach((m, i) => {
+        const card = document.createElement('div');
+        card.className = 'edu-card rounded-2xl p-6 border border-outline-variant bg-white flex flex-col h-full hover:border-primary transition-all group';
+        card.dataset.cat = m.cat;
+        card.innerHTML = `
+      <div class="aspect-video mb-4 rounded-lg bg-surface-container overflow-hidden relative flex items-center justify-center">
+        <span class="material-symbols-outlined text-6xl text-outline">${m.icon}</span>
+      </div>
+      <div class="flex-grow">
+        <span class="text-label-sm font-label-sm text-secondary uppercase tracking-wider mb-1 block">${m.cat}</span>
+        <h4 class="font-headline-md text-headline-md text-primary mb-2 line-clamp-2" style="font-size:19px;">${m.title}</h4>
+        <p class="text-on-surface-variant text-sm line-clamp-3 mb-4">${m.desc || ''}</p>
+      </div>
+      <div class="pt-4 border-t border-outline-variant flex items-center justify-between gap-2">
+        <span class="text-xs text-outline font-label-sm">${m.type}</span>
+        <div class="flex items-center gap-1">
+          <button type="button" class="edu-preview-btn flex items-center gap-1 text-primary hover:bg-primary-fixed px-3 py-2 rounded-lg transition-colors text-sm font-label-sm"><span class="material-symbols-outlined text-[18px]">visibility</span>Preview</button>
+          <a href="${m.file}" download class="text-primary hover:bg-primary-fixed p-2 rounded-lg transition-colors" aria-label="Unduh"><span class="material-symbols-outlined">download</span></a>
+        </div>
+      </div>`;
+        card.querySelector('.edu-preview-btn').addEventListener('click', () => openPreview(m));
+        grid.appendChild(card);
+
+        const box = card.querySelector('.aspect-video');
+        if (m.cover) {
+            const test = new Image();
+            test.onload = () => {
+                const img = document.createElement('img');
+                img.src = m.cover;
+                img.className = 'w-full h-full object-cover';
+                box.innerHTML = '';
+                box.appendChild(img);
+            };
+            test.src = m.cover;
+        } else if (m.source === 'local' && m.file.toLowerCase().endsWith('.pdf') && window['pdfjsLib']) {
+            renderPdfCover(m.file, box);
+        }
+    });
+}
+
+function renderPdfCover(fileUrl, box) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    pdfjsLib.getDocument(fileUrl).promise
+        .then(pdf => pdf.getPage(1))
+        .then(page => {
+            const viewport = page.getViewport({ scale: 1 });
+            const scale = Math.max(box.clientWidth, 320) / viewport.width;
+            const scaledViewport = page.getViewport({ scale });
+            const canvas = document.createElement('canvas');
+            canvas.className = 'w-full h-full object-cover';
+            canvas.width = scaledViewport.width;
+            canvas.height = scaledViewport.height;
+            const ctx = canvas.getContext('2d');
+            return page.render({ canvasContext: ctx, viewport: scaledViewport }).promise.then(() => {
+                box.innerHTML = '';
+                box.appendChild(canvas);
+            });
+        })
+        .catch(() => { /* file belum ada / gagal dibaca, biarkan ikon placeholder */ });
+}
+
+function openPreview(m) {
+    const ext = m.file.split('.').pop().toLowerCase();
+    if (ext === 'pdf') {
+        window.open(m.file, '_blank');
+        return;
+    }
+    if (m.source === 'drive') {
+        window.open(m.file, '_blank');
+        return;
+    }
+    const absoluteUrl = new URL(m.file, window.location.href).href;
+    if (absoluteUrl.indexOf('localhost') !== -1 || absoluteUrl.indexOf('127.0.0.1') !== -1) {
+        alert('Preview untuk file PPTX/DOCX lokal cuma bisa jalan setelah website ini online. Coba tombol Unduh dulu.');
+        return;
+    }
+    window.open('https://docs.google.com/viewer?url=' + encodeURIComponent(absoluteUrl) + '&embedded=true', '_blank');
+}
+
+function loadMaterials() {
+    const configured = window.firebaseConfig && window.firebaseConfig.apiKey && window.firebaseConfig.apiKey.indexOf('GANTI_DENGAN') !== 0;
+    if (!configured) {
+        console.info('Firebase belum disambungkan, pakai data contoh.');
+        materials = DEMO_ITEMS;
+        renderMaterials();
+        return;
+    }
+    try {
+        if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+        firebase.firestore().collection('edukasi').orderBy('createdAt', 'desc').get()
+            .then(snap => {
+                materials = [];
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    materials.push({
+                        cat: d.pokja, title: d.judul, desc: '', type: d.tipeFile,
+                        icon: iconFor(d.tipeFile), file: d.fileUrl, cover: d.coverUrl || '', source: 'firebase'
+                    });
+                });
+                if (materials.length === 0) materials = DEMO_ITEMS;
+                renderMaterials();
+            })
+            .catch(err => {
+                console.warn('Gagal ambil data dari Firebase, pakai data contoh.', err);
+                materials = DEMO_ITEMS;
+                renderMaterials();
+            });
+    } catch (err) {
+        console.warn('Firebase error, pakai data contoh.', err);
+        materials = DEMO_ITEMS;
+        renderMaterials();
+    }
+}
+
+const searchInput = document.querySelector('input[type="text"]');
+searchInput.addEventListener('input', (e) => {
+    const value = e.target.value.toLowerCase();
+    document.querySelectorAll('.edu-card').forEach(card => {
+        const h = card.querySelector('h4');
+        if (!h) return;
+        card.style.display = h.textContent.toLowerCase().includes(value) ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.remove('active', 'bg-primary', 'text-on-primary');
+            b.classList.add('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
+        });
+        btn.classList.add('active', 'bg-primary', 'text-on-primary');
+        btn.classList.remove('bg-surface-container', 'border', 'border-outline-variant', 'text-on-surface-variant');
+
+        const filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.edu-card').forEach(card => {
+            card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
+        });
+    });
+});
+
+loadMaterials();
+</script>
+<script src="include.js"></script>
+</body></html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Pokja IV - Stunting - TP PKK Sosromenduran</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link rel="stylesheet" href="header.css"><script id="tailwind-config">try{
+      tailwind.config = { darkMode: "class", theme: { extend: {
+            "colors": {"surface-container-lowest": "#ffffff","on-tertiary-fixed-variant": "#00504A","tertiary-fixed": "#8EF4E9","on-secondary-fixed": "#241A00","surface-bright": "#FBF9F8","surface-container-high": "#EAE8E7","on-secondary": "#ffffff","tertiary": "#006A63","outline": "#737780","primary-container": "#752305","surface-container": "#F0EDED","background": "#FBF9F8","secondary-fixed": "#FFE087","surface": "#FBF9F8","surface-tint": "#9F4122","surface-variant": "#E4E2E1","error-container": "#ffdad6","primary-fixed": "#FFDBD0","outline-variant": "#c3c6d1","on-primary-fixed-variant": "#9F4122","error": "#ba1a1a","secondary-fixed-dim": "#FDD34D","surface-dim": "#DCD9D9","on-tertiary-fixed": "#00201D","on-error-container": "#93000a","secondary-container": "#FDD34D","on-primary-fixed": "#9F4122","on-tertiary-container": "#004842","on-surface": "#1B1C1C","surface-container-highest": "#E4E2E1","inverse-on-surface": "#f0f1f2","inverse-surface": "#2e3132","on-background": "#1B1C1C","on-tertiary": "#ffffff","on-secondary-container": "#574500","on-primary-container": "#FFDBD0","tertiary-container": "#8EF4E9","on-secondary-fixed-variant": "#574500","on-surface-variant": "#56423C","inverse-primary": "#FFB59E","primary-fixed-dim": "#FFB59E","primary": "#9F4122","surface-container-low": "#F5F3F3","on-error": "#ffffff","tertiary-fixed-dim": "#71D7CD","secondary": "#C99A2E","on-primary": "#ffffff",
+                    "fun-teal": "#0f9d78","fun-teal-bg": "#e3f6ee","fun-coral": "#e8734a","fun-coral-bg": "#fdece3","fun-pink": "#d1497a","fun-pink-bg": "#fbe7ef","fun-amber": "#dba516","fun-amber-bg": "#fbf1d8"},
+            "borderRadius": {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+            "spacing": {"margin-desktop": "40px","margin-mobile": "16px","unit": "4px","gutter": "24px","container-max": "1280px"},
+            "fontFamily": {"headline-lg": ["Inter"],"headline-md": ["Inter"],"headline-xl": ["Inter"],"label-md": ["Inter"],"label-sm": ["Inter"],"body-lg": ["Inter"],"body-md": ["Inter"]},
+            "fontSize": {"headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}],"headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],"headline-xl": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],"label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],"label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],"body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],"body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]}
+      }}}
+    }catch(_e){}</script>
+<style>
+@keyframes popIn { 0%{ transform: scale(0.92); opacity:0; } 100%{ transform: scale(1); opacity:1; } }
+@media (prefers-reduced-motion: no-preference) { .result-pop { animation: popIn .25s ease-out; } }
+.quiz-tab[aria-selected="true"] { background:#9F4122; color:#fff; }
+.quiz-panel { display:none; }
+.quiz-panel.active { display:block; }
+</style>
+</head><body class="bg-background text-on-surface">
+<div id="header-placeholder"></div>
+<main class="pb-20">
+
+<section class="bg-primary text-on-primary pt-28 pb-16">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-2 text-sm opacity-80 mb-6"><a href="index.html" class="hover:underline">Beranda</a><span>/</span><a href="bidang.html" class="hover:underline">Bidang</a><span>/</span><span>Pokja IV</span></div>
+<div class="flex items-center gap-6 flex-wrap">
+<div class="w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20"><span class="material-symbols-outlined text-4xl">medical_services</span></div>
+<div>
+<span class="px-3 py-1 bg-secondary text-on-primary rounded-full font-label-sm text-label-sm">POKJA IV</span>
+<h1 class="font-headline-xl text-headline-xl mt-2">Kesehatan, Lingkungan &amp; Pencegahan Stunting</h1>
+<p class="mt-2 opacity-90 max-w-xl">Stunting adalah kondisi gagal tumbuh anak akibat kekurangan gizi kronis, terutama di 1000 hari pertama kehidupan. Yuk cek kondisimu lewat skrining mandiri di bawah.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-16">
+<h2 class="font-headline-md text-headline-md text-primary mb-2 text-center">Skrining mandiri, cepat &amp; gampang</h2>
+<p class="text-on-surface-variant text-center mb-8 max-w-lg mx-auto">Pilih cek yang sesuai kondisimu — hasilnya langsung keluar, tanpa perlu daftar.</p>
+
+<div class="flex flex-wrap gap-3 justify-center mb-10" role="tablist">
+<button class="quiz-tab px-5 py-2.5 rounded-full border border-outline-variant bg-white font-label-md text-label-md flex items-center gap-2" role="tab" aria-selected="true" data-target="quiz-gizi"><span class="material-symbols-outlined text-[18px]">nutrition</span>Cek gizi</button>
+<button class="quiz-tab px-5 py-2.5 rounded-full border border-outline-variant bg-white font-label-md text-label-md flex items-center gap-2" role="tab" aria-selected="false" data-target="quiz-bumil"><span class="material-symbols-outlined text-[18px]">favorite</span>Ibu hamil</button>
+<button class="quiz-tab px-5 py-2.5 rounded-full border border-outline-variant bg-white font-label-md text-label-md flex items-center gap-2" role="tab" aria-selected="false" data-target="quiz-caten"><span class="material-symbols-outlined text-[18px]">diversity_1</span>Caten</button>
+<button class="quiz-tab px-5 py-2.5 rounded-full border border-outline-variant bg-white font-label-md text-label-md flex items-center gap-2" role="tab" aria-selected="false" data-target="quiz-deteksi"><span class="material-symbols-outlined text-[18px]">event_available</span>Deteksi dini</button>
+</div>
+
+<div class="max-w-lg mx-auto">
+
+<!-- QUIZ 1: LILA -->
+<div id="quiz-gizi" class="quiz-panel active">
+<div class="rounded-2xl border-2 border-fun-teal/20 bg-white p-6 md:p-8">
+<div class="flex items-center gap-3 mb-1"><span class="w-10 h-10 rounded-full bg-fun-teal-bg flex items-center justify-center"><span class="material-symbols-outlined text-fun-teal">straighten</span></span><h3 class="font-headline-md text-headline-md text-primary text-lg">Cek status gizi (LILA)</h3></div>
+<p class="text-on-surface-variant text-sm mb-5">Ukur lingkar lengan atas pakai pita ukur, lalu masukkan angkanya.</p>
+<label for="lila-input" class="font-label-md text-label-md block mb-2">Lingkar lengan atas (cm)</label>
+<input id="lila-input" type="number" step="0.1" min="10" max="40" placeholder="contoh: 24.5" oninput="checkLila(this.value)" class="w-full text-center text-lg px-4 py-3 rounded-xl border-2 border-outline-variant focus:border-fun-teal outline-none transition-colors">
+<div id="lila-result" class="mt-5 p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">rule</span>
+<p class="text-sm text-on-surface-variant">Masukkan angka LILA untuk lihat hasilnya.</p>
+</div>
+<p class="text-xs text-on-surface-variant mt-4">Standar Kemenkes: LILA &lt; 23,5 cm berisiko Kekurangan Energi Kronis (KEK).</p>
+</div>
+</div>
+
+<!-- QUIZ 2: IBU HAMIL -->
+<div id="quiz-bumil" class="quiz-panel">
+<div class="rounded-2xl border-2 border-fun-coral/20 bg-white p-6 md:p-8">
+<div class="flex items-center gap-3 mb-1"><span class="w-10 h-10 rounded-full bg-fun-coral-bg flex items-center justify-center"><span class="material-symbols-outlined text-fun-coral">favorite</span></span><h3 class="font-headline-md text-headline-md text-primary text-lg">Cek kondisi ibu hamil</h3></div>
+<p class="text-on-surface-variant text-sm mb-5">Centang gejala yang kamu alami saat ini.</p>
+<div class="space-y-3 mb-5">
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="bumil-check w-5 h-5"><span class="text-sm">Tekanan darah tinggi</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="bumil-check w-5 h-5"><span class="text-sm">HB (hemoglobin) rendah / sering lemas &amp; pucat</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="bumil-check w-5 h-5"><span class="text-sm">Kaki bengkak</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="bumil-check w-5 h-5"><span class="text-sm">Mual-muntah berlebihan</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="bumil-check w-5 h-5"><span class="text-sm">Sering konsumsi makanan asin / garam berlebih</span></label>
+</div>
+<button onclick="checkBumil()" class="w-full bg-fun-coral text-white py-3 rounded-xl font-label-md text-label-md hover:opacity-90 transition-all">Lihat hasil</button>
+<div id="bumil-result" class="mt-5 p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">rule</span>
+<p class="text-sm text-on-surface-variant">Centang gejala lalu klik "Lihat hasil".</p>
+</div>
+</div>
+</div>
+
+<!-- QUIZ 3: CATEN -->
+<div id="quiz-caten" class="quiz-panel">
+<div class="rounded-2xl border-2 border-fun-pink/20 bg-white p-6 md:p-8">
+<div class="flex items-center gap-3 mb-1"><span class="w-10 h-10 rounded-full bg-fun-pink-bg flex items-center justify-center"><span class="material-symbols-outlined text-fun-pink">diversity_1</span></span><h3 class="font-headline-md text-headline-md text-primary text-lg">Cek kesiapan calon pengantin</h3></div>
+<p class="text-on-surface-variant text-sm mb-5">Centang kondisi yang sesuai denganmu.</p>
+<div class="space-y-3 mb-5">
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="caten-check w-5 h-5"><span class="text-sm">Belum pernah cek kesehatan pranikah (HB, gula darah, dll)</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="caten-check w-5 h-5"><span class="text-sm">Usia calon pengantin perempuan di bawah 20 tahun</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="caten-check w-5 h-5"><span class="text-sm">Berat badan kurang / lingkar lengan &lt; 23,5 cm</span></label>
+<label class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant hover:bg-surface-container-low cursor-pointer"><input type="checkbox" class="caten-check w-5 h-5"><span class="text-sm">Belum mendapat imunisasi TT (Tetanus Toksoid)</span></label>
+</div>
+<button onclick="checkCaten()" class="w-full bg-fun-pink text-white py-3 rounded-xl font-label-md text-label-md hover:opacity-90 transition-all">Lihat hasil</button>
+<div id="caten-result" class="mt-5 p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">rule</span>
+<p class="text-sm text-on-surface-variant">Centang kondisi lalu klik "Lihat hasil".</p>
+</div>
+</div>
+</div>
+
+<!-- QUIZ 4: DETEKSI DINI -->
+<div id="quiz-deteksi" class="quiz-panel">
+<div class="rounded-2xl border-2 border-fun-amber/20 bg-white p-6 md:p-8">
+<div class="flex items-center gap-3 mb-1"><span class="w-10 h-10 rounded-full bg-fun-amber-bg flex items-center justify-center"><span class="material-symbols-outlined text-fun-amber">event_available</span></span><h3 class="font-headline-md text-headline-md text-primary text-lg">Deteksi dini bulanan</h3></div>
+<p class="text-on-surface-variant text-sm mb-5">Untuk ibu hamil trimester 1–3. Laporkan kondisimu tiap bulan.</p>
+<label for="trimester-select" class="font-label-md text-label-md block mb-2">Trimester saat ini</label>
+<select id="trimester-select" class="w-full px-4 py-3 rounded-xl border-2 border-outline-variant focus:border-fun-amber outline-none mb-4 transition-colors">
+<option value="">Pilih trimester</option>
+<option value="1">Trimester 1 (0–13 minggu)</option>
+<option value="2">Trimester 2 (14–27 minggu)</option>
+<option value="3">Trimester 3 (28–40 minggu)</option>
+</select>
+<label for="jarak-input" class="font-label-md text-label-md block mb-2">Jarak dari kelahiran anak sebelumnya (bulan)</label>
+<input id="jarak-input" type="number" min="0" max="240" placeholder="contoh: 30 (kosongkan jika anak pertama)" class="w-full px-4 py-3 rounded-xl border-2 border-outline-variant focus:border-fun-amber outline-none transition-colors">
+<button onclick="checkDeteksi()" class="w-full bg-fun-amber text-white py-3 rounded-xl font-label-md text-label-md hover:opacity-90 transition-all mt-4">Lihat hasil</button>
+<div id="deteksi-result" class="mt-5 p-4 rounded-xl border border-outline-variant bg-surface-container-low flex items-start gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">rule</span>
+<p class="text-sm text-on-surface-variant">Lengkapi data lalu klik "Lihat hasil".</p>
+</div>
+<div class="mt-6 pt-5 border-t border-dashed border-outline-variant">
+<p class="text-sm mb-3"><strong>Sudah cek?</strong> Laporkan datamu secara resmi tiap bulan lewat Google Form dari Kader/RT.</p>
+<a href="#" class="inline-flex items-center gap-2 border border-primary text-primary px-4 py-2 rounded-lg font-label-md text-label-sm hover:bg-primary-fixed transition-colors">Buka Google Form pendataan<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="bg-surface-container-low py-12 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-container-max mx-auto flex flex-wrap gap-8 justify-center text-center">
+<div><p class="font-headline-lg text-headline-lg text-fun-teal">23,5 cm</p><p class="text-sm text-on-surface-variant mt-1">Standar LILA aman</p></div>
+<div><p class="font-headline-lg text-headline-lg text-fun-coral">2 tahun</p><p class="text-sm text-on-surface-variant mt-1">Jarak ideal kehamilan</p></div>
+<div><p class="font-headline-lg text-headline-lg text-fun-pink">3 trimester</p><p class="text-sm text-on-surface-variant mt-1">Laporan mandiri bumil</p></div>
+</div>
+<p class="text-center text-xs text-on-surface-variant mt-8 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-sm">lock</span>Data kesehatan bersifat privat, hanya untuk keperluan skrining mandiri.</p>
+</section>
+
+</main>
+<div id="footer-placeholder"></div>
+<script>
+document.querySelectorAll('.quiz-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.quiz-tab').forEach(t => t.setAttribute('aria-selected','false'));
+    document.querySelectorAll('.quiz-panel').forEach(p => p.classList.remove('active'));
+    tab.setAttribute('aria-selected','true');
+    document.getElementById(tab.dataset.target).classList.add('active');
+  });
+});
+
+function setResult(id, tone, icon, title, desc) {
+  const box = document.getElementById(id);
+  const tones = {
+    aman:   { bg:'#e3f6ee', border:'#0f9d78', icon:'#0f9d78', title:'#04342c', sub:'#0f6e56' },
+    risiko: { bg:'#fdece3', border:'#e8734a', icon:'#c14a1f', title:'#4a1b0c', sub:'#993c1d' },
+    netral: { bg:'#FFDBD0', border:'#c3c6d1', icon:'#56423C', title:'#1B1C1C', sub:'#56423C' }
+  };
+  const t = tones[tone];
+  box.style.background = t.bg;
+  box.style.borderColor = t.border;
+  box.className = 'mt-5 p-4 rounded-xl border flex items-start gap-3 result-pop';
+  box.innerHTML = `<span class="material-symbols-outlined" style="color:${t.icon}">${icon}</span>
+    <div><p class="font-bold text-sm mb-0.5" style="color:${t.title}">${title}</p><p class="text-sm" style="color:${t.sub}">${desc}</p></div>`;
+}
+
+function checkLila(val) {
+  const n = parseFloat(val);
+  if (!val || isNaN(n)) { setResult('lila-result','netral','rule','','Masukkan angka LILA untuk lihat hasilnya.'); return; }
+  if (n < 23.5) setResult('lila-result','risiko','error','Berisiko kurang gizi', `LILA ${n.toFixed(1)} cm di bawah standar 23,5 cm. Sebaiknya periksa ke Puskesmas terdekat.`);
+  else setResult('lila-result','aman','check_circle','Status gizi aman', `LILA ${n.toFixed(1)} cm sudah di atas standar 23,5 cm. Tetap jaga pola makan sehat ya.`);
+}
+
+function checkBumil() {
+  const n = document.querySelectorAll('.bumil-check:checked').length;
+  if (n > 0) setResult('bumil-result','risiko','error','Perlu diperiksa lebih lanjut', `Ada ${n} gejala yang kamu alami. Sebaiknya segera periksa ke Puskesmas atau bidan terdekat.`);
+  else setResult('bumil-result','aman','check_circle','Kondisi terpantau baik', 'Tidak ada gejala yang dicentang. Tetap rutin periksa kehamilan ya.');
+}
+
+function checkCaten() {
+  const n = document.querySelectorAll('.caten-check:checked').length;
+  if (n > 0) setResult('caten-result','risiko','error','Ada yang perlu disiapkan', `Ada ${n} hal yang perlu diperhatikan sebelum menikah. Konsultasikan ke Puskesmas untuk pemeriksaan pranikah.`);
+  else setResult('caten-result','aman','check_circle','Siap secara kesehatan', 'Tidak ada kondisi berisiko yang dicentang. Tetap jaga kesehatan menjelang pernikahan.');
+}
+
+function checkDeteksi() {
+  const trimester = document.getElementById('trimester-select').value;
+  const jarakVal = document.getElementById('jarak-input').value;
+  if (!trimester) { setResult('deteksi-result','netral','rule','','Pilih trimester terlebih dahulu.'); return; }
+  const jarak = jarakVal === '' ? null : parseFloat(jarakVal);
+  let pesan = `Trimester ${trimester} tercatat.`;
+  let berisiko = false;
+  if (jarak !== null && jarak < 24) { berisiko = true; pesan += ` Jarak dari kelahiran sebelumnya ${jarak} bulan, kurang dari 2 tahun yang dianjurkan.`; }
+  else if (jarak !== null) { pesan += ` Jarak dari kelahiran sebelumnya ${jarak} bulan, sudah sesuai anjuran (≥ 2 tahun).`; }
+  if (berisiko) setResult('deteksi-result','risiko','error','Perlu perhatian ekstra', pesan + ' Sebaiknya konsultasikan ke Puskesmas.');
+  else setResult('deteksi-result','aman','check_circle','Tercatat, terus pantau ya', pesan);
+}
+
+
+</script>
+<script src="include.js"></script>
+</body></html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Galeri Kegiatan - TP PKK Sosromenduran</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link rel="stylesheet" href="header.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = { darkMode: "class", theme: { extend: {
+            "colors": {"tertiary": "#006A63","on-primary-fixed": "#9F4122","surface-container-lowest": "#ffffff","inverse-on-surface": "#f0f1f2","surface-container-low": "#F5F3F3","surface": "#FBF9F8","tertiary-fixed-dim": "#71D7CD","on-secondary-container": "#574500","primary-container": "#752305","inverse-primary": "#FFB59E","surface-container": "#F0EDED","surface-dim": "#DCD9D9","error-container": "#ffdad6","surface-container-highest": "#E4E2E1","on-secondary-fixed": "#241A00","surface-container-high": "#EAE8E7","primary-fixed-dim": "#FFB59E","surface-variant": "#E4E2E1","outline-variant": "#c3c6d1","on-tertiary-container": "#004842","background": "#FBF9F8","secondary-fixed-dim": "#FDD34D","secondary": "#C99A2E","on-secondary-fixed-variant": "#574500","surface-tint": "#9F4122","surface-bright": "#FBF9F8","on-primary": "#ffffff","on-primary-container": "#FFDBD0","tertiary-container": "#8EF4E9","secondary-fixed": "#FFE087","on-tertiary-fixed-variant": "#00504A","outline": "#737780","on-tertiary-fixed": "#00201D","on-error": "#ffffff","primary-fixed": "#FFDBD0","error": "#ba1a1a","secondary-container": "#FDD34D","on-primary-fixed-variant": "#9F4122","inverse-surface": "#2e3132","on-secondary": "#ffffff","on-tertiary": "#ffffff","on-error-container": "#93000a","on-background": "#1B1C1C","on-surface-variant": "#56423C","on-surface": "#1B1C1C","tertiary-fixed": "#8EF4E9","primary": "#9F4122"},
+            "borderRadius": {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+            "spacing": {"margin-mobile": "16px","margin-desktop": "40px","container-max": "1280px","unit": "4px","gutter": "24px"},
+            "fontFamily": {"headline-md": ["Inter"],"body-md": ["Inter"],"label-md": ["Inter"],"headline-xl": ["Inter"],"label-sm": ["Inter"],"body-lg": ["Inter"],"headline-lg": ["Inter"]},
+            "fontSize": {"headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],"body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],"label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],"headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],"label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],"body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],"headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}]}
+      }}}
+    </script>
+<style>
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 640px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+    .gallery-card { border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .gallery-thumb { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #FFB59E; }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .filter-btn.active { background-color: #FFB59E; color: white; }
+</style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<div id="header-placeholder"></div>
+<main class="pt-24 pb-20">
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-8">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2">Galeri Kegiatan</h1>
+<div class="flex flex-wrap gap-2 mt-4" id="gallery-filters">
+<button class="filter-btn active px-4 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant hover:border-secondary transition-all" data-filter="all">Semua</button>
+<button class="filter-btn px-4 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant hover:border-secondary transition-all" data-filter="sosial">Kegiatan Sosial</button>
+<button class="filter-btn px-4 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant hover:border-secondary transition-all" data-filter="pelatihan">Pelatihan</button>
+<button class="filter-btn px-4 py-2 rounded-full font-label-sm text-label-sm border border-outline-variant hover:border-secondary transition-all" data-filter="rapat">Rapat Pleno</button>
+</div>
+</section>
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="gallery-grid" id="gallery-grid">
+</div>
+</section>
+</main>
+
+<!-- Modal lihat foto -->
+<div id="photo-modal" class="fixed inset-0 z-[100] items-center justify-center p-4" style="display:none; background:rgba(25,28,29,0.85);" onclick="if(event.target===this) closePhotoModal();">
+<div class="bg-white rounded-2xl max-w-3xl w-full overflow-hidden relative">
+<button onclick="closePhotoModal()" class="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center z-10" style="background:rgba(255,255,255,0.9);" aria-label="Tutup">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="bg-surface-container-high flex items-center justify-center overflow-hidden" style="max-height:75vh;">
+<img id="modal-photo-img" src="" alt="" class="w-full" style="max-height:75vh; object-fit:contain;">
+</div>
+<div class="p-5 flex items-center justify-between gap-4">
+<div>
+<h3 id="modal-photo-title" class="font-headline-md text-headline-md text-primary" style="font-size:17px;"></h3>
+<p id="modal-photo-date" class="text-on-surface-variant font-label-md text-label-md"></p>
+</div>
+<a id="modal-photo-download" href="" download class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-label-md text-label-sm flex-shrink-0 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm">download</span>Unduh
+</a>
+</div>
+</div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+// ============================================================
+// SUMBER DATA GALERI — diambil dari Firebase (upload lewat halaman Admin > Kelola Konten)
+// ============================================================
+// Kalau Firebase belum disambungkan (firebase-config.js masih placeholder) atau gagal
+// diakses, otomatis fallback ke data contoh di bawah — jadi halaman ini gak akan pernah kosong.
+
+const DEMO_ITEMS = [
+  {cat:'sosial', title:'Penyaluran Bantuan Sembako', date:'12 Okt 2025', icon:'volunteer_activism', img:'assets/images/galeri/sembako.jpg'},
+  {cat:'pelatihan', title:'Pelatihan Urban Farming', date:'05 Okt 2025', icon:'yard', img:'assets/images/galeri/urban-farming.jpg'},
+  {cat:'rapat', title:'Evaluasi Program Kerja Triwulan', date:'28 Sep 2025', icon:'groups', img:'assets/images/galeri/evaluasi.jpg'},
+  {cat:'pelatihan', title:'Workshop UMKM Kuliner', date:'15 Sep 2025', icon:'restaurant', img:'assets/images/galeri/umkm.jpg'},
+  {cat:'sosial', title:'Posyandu & Kelas Ibu Hamil', date:'10 Sep 2025', icon:'family_restroom', img:'assets/images/galeri/posyandu.jpg'},
+  {cat:'rapat', title:'Pelantikan Pengurus Baru', date:'02 Sep 2025', icon:'workspace_premium', img:'assets/images/galeri/pelantikan.jpg'}
+];
+
+let items = [];
+const grid = document.getElementById('gallery-grid');
+
+function renderItems() {
+  grid.innerHTML = '';
+  if (items.length === 0) {
+    grid.innerHTML = '<p class="text-on-surface-variant col-span-full text-center py-12">Belum ada foto kegiatan.</p>';
+    return;
+  }
+  items.forEach((it, i) => {
+    const div = document.createElement('div');
+    div.className = 'gallery-card';
+    div.dataset.category = it.cat;
+    div.innerHTML = `<div class="gallery-thumb" style="cursor:pointer;">
+        <span class="material-symbols-outlined text-4xl text-outline" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);">${it.icon || 'photo_camera'}</span>
+        <img src="${it.img}" alt="${it.title}" class="hidden" onload="this.classList.remove('hidden'); this.previousElementSibling.style.display='none';" onerror="this.remove();">
+      </div>
+      <div class="p-4">
+        <h3 class="font-headline-md text-headline-md text-primary" style="font-size:17px;">${it.title}</h3>
+        <p class="text-on-surface-variant font-label-md text-label-md mt-1">${it.date}</p>
+      </div>`;
+    div.querySelector('.gallery-thumb').addEventListener('click', () => openPhotoModal(i));
+    grid.appendChild(div);
+  });
+}
+
+function loadGallery() {
+  const configured = window.firebaseConfig && window.firebaseConfig.apiKey && window.firebaseConfig.apiKey.indexOf('GANTI_DENGAN') !== 0;
+  if (!configured) {
+    console.info('Firebase belum disambungkan, pakai data contoh.');
+    items = DEMO_ITEMS;
+    renderItems();
+    return;
+  }
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+    firebase.firestore().collection('galeri').orderBy('createdAt', 'desc').get()
+      .then(snap => {
+        items = [];
+        snap.forEach(doc => {
+          const d = doc.data();
+          items.push({ cat: d.kategori, title: d.judul, date: d.tanggal, icon: 'photo_camera', img: d.fotoUrl });
+        });
+        if (items.length === 0) items = DEMO_ITEMS;
+        renderItems();
+      })
+      .catch(err => {
+        console.warn('Gagal ambil data dari Firebase, pakai data contoh.', err);
+        items = DEMO_ITEMS;
+        renderItems();
+      });
+  } catch (err) {
+    console.warn('Firebase error, pakai data contoh.', err);
+    items = DEMO_ITEMS;
+    renderItems();
+  }
+}
+
+function openPhotoModal(i) {
+  const it = items[i];
+  document.getElementById('modal-photo-title').textContent = it.title;
+  document.getElementById('modal-photo-date').textContent = it.date;
+
+  const img = document.getElementById('modal-photo-img');
+  const dl = document.getElementById('modal-photo-download');
+  const testImg = new Image();
+  testImg.onload = () => {
+    img.src = it.img;
+    img.style.display = '';
+    dl.style.display = 'flex';
+    dl.href = it.img;
+    dl.setAttribute('download', it.title.replace(/\s+/g, '-').toLowerCase() + '.jpg');
+  };
+  testImg.onerror = () => {
+    img.style.display = 'none';
+    dl.style.display = 'none';
+  };
+  testImg.src = it.img;
+
+  document.getElementById('photo-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closePhotoModal() {
+  document.getElementById('photo-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePhotoModal(); });
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.getAttribute('data-filter');
+    document.querySelectorAll('.gallery-card').forEach(item => {
+      item.style.display = (filter === 'all' || item.dataset.category === filter) ? '' : 'none';
+    });
+  });
+});
+
+loadGallery();
+</script>
+<script src="include.js"></script>
+</body></html>

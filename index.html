@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html class="light" lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link rel="stylesheet" href="header.css"><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#00504A",
+                    "tertiary-fixed": "#8EF4E9",
+                    "on-secondary-fixed": "#241A00",
+                    "surface-bright": "#FBF9F8",
+                    "surface-container-high": "#EAE8E7",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#006A63",
+                    "outline": "#737780",
+                    "primary-container": "#752305",
+                    "surface-container": "#F0EDED",
+                    "background": "#FBF9F8",
+                    "secondary-fixed": "#FFE087",
+                    "surface": "#FBF9F8",
+                    "surface-tint": "#9F4122",
+                    "surface-variant": "#E4E2E1",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#FFDBD0",
+                    "outline-variant": "#c3c6d1",
+                    "on-primary-fixed-variant": "#9F4122",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#FDD34D",
+                    "surface-dim": "#DCD9D9",
+                    "on-tertiary-fixed": "#00201D",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#FDD34D",
+                    "on-primary-fixed": "#9F4122",
+                    "on-tertiary-container": "#004842",
+                    "on-surface": "#1B1C1C",
+                    "surface-container-highest": "#E4E2E1",
+                    "inverse-on-surface": "#f0f1f2",
+                    "inverse-surface": "#2e3132",
+                    "on-background": "#1B1C1C",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-container": "#574500",
+                    "on-primary-container": "#FFDBD0",
+                    "tertiary-container": "#8EF4E9",
+                    "on-secondary-fixed-variant": "#574500",
+                    "on-surface-variant": "#56423C",
+                    "inverse-primary": "#FFB59E",
+                    "primary-fixed-dim": "#FFB59E",
+                    "primary": "#9F4122",
+                    "surface-container-low": "#F5F3F3",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#71D7CD",
+                    "secondary": "#C99A2E",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "gutter": "24px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script>
+<style>
+  .glass { background: rgba(255, 255, 255, 0.22); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.55); }
+  .stat-suffix { font-size: 14px; font-weight: 500; margin-left: 4px; }
+  .hero-gradient { background: linear-gradient(135deg, rgba(159, 65, 34, 0.72) 0%, rgba(253, 211, 77, 0.35) 100%); }
+</style>
+<meta charset="utf-8"/></head><body class="font-body-md text-on-surface">
+<!-- Top Navigation Bar -->
+<div id="header-placeholder"></div>
+<main>
+<!-- Hero Section -->
+<section class="relative h-[870px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover" alt="Kegiatan PKK" src="assets/images/galeri/hero.jpeg" onerror="this.style.display='none'; this.parentElement.style.background='#9F4122';"/>
+<div class="absolute inset-0 hero-gradient"></div>
+<div class="absolute bottom-0 left-0 right-0 h-48" style="background: linear-gradient(to bottom, transparent, #FFFFFF 95%);"></div>
+</div>
+<!-- Blob dekoratif -->
+<div class="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-[100px] pointer-events-none" style="background:rgba(253,211,77,0.3);"></div>
+<div class="absolute top-1/2 -left-24 w-64 h-64 rounded-full blur-[80px] pointer-events-none" style="background:rgba(142,244,233,0.25);"></div>
+<div class="relative z-10 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<div class="max-w-2xl text-on-primary">
+<span class="px-4 py-1 rounded-full font-label-sm text-label-sm mb-6 inline-block uppercase tracking-wider" style="background:rgba(253,211,77,0.25); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border:1px solid rgba(253,211,77,0.5); color:#ffffff;">Pemberdayaan Masyarakat</span>
+<h1 class="font-headline-xl text-headline-xl mb-6 leading-tight">Membangun Keluarga <span style="color:#FDD34D;">Sejahtera</span> di Kalurahan Sosromenduran</h1>
+<p class="font-body-lg text-body-lg mb-10 text-on-primary/90">Wadah aktualisasi diri perempuan dalam mewujudkan keluarga yang mandiri, sehat, dan berdaya melalui 10 Program Pokok PKK.</p>
+<div class="flex flex-wrap gap-4">
+<a href="bidang.html" class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md text-label-md flex items-center gap-2 shadow-xl transition-all hover:scale-105">
+                            Jelajahi Program <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a href="profil.html" class="glass px-8 py-3 rounded-full font-label-md text-label-md text-on-primary flex items-center justify-center shadow-xl transition-all hover:scale-105">
+Profil PKK</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section (Quick Stats) -->
+<section class="-mt-16 relative z-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 glass rounded-[32px] shadow-xl p-8" id="stats-section">
+<div class="text-center md:border-r border-outline-variant/30 last:border-0">
+<p class="text-primary font-headline-lg text-headline-lg"><span class="stat-num" data-target="10">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Program Pokok</p>
+</div>
+<div class="text-center md:border-r border-outline-variant/30 last:border-0">
+<p class="text-secondary font-headline-lg text-headline-lg"><span class="stat-num" data-target="32">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Pengurus TP-PKK</p>
+</div>
+<div class="text-center md:border-r border-outline-variant/30 last:border-0">
+<p class="text-tertiary font-headline-lg text-headline-lg"><span class="stat-num" data-target="54">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Kelompok PKK RT</p>
+</div>
+<div class="text-center md:border-r border-outline-variant/30 last:border-0">
+<p class="text-primary font-headline-lg text-headline-lg"><span class="stat-num" data-target="14">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Kelompok PKK RW</p>
+</div>
+<div class="text-center">
+<p class="text-secondary font-headline-lg text-headline-lg"><span class="stat-num" data-target="81">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Kelompok Dasawisma</p>
+</div>
+</div>
+</section>
+<script>
+(function () {
+  var animated = false;
+  function countUp(el) {
+    var target = parseInt(el.getAttribute('data-target'), 10);
+    var duration = 1600;
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var value = Math.floor(progress * target);
+      el.textContent = value;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  function trigger() {
+    if (animated) return;
+    animated = true;
+    document.querySelectorAll('.stat-num').forEach(countUp);
+  }
+  var target = document.getElementById('stats-section');
+  if (target && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) trigger(); });
+    }, { threshold: 0.3 });
+    observer.observe(target);
+  } else {
+    trigger();
+  }
+})();
+</script>
+<!-- Kata Sambutan Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop">
+<div class="relative max-w-5xl mx-auto rounded-[40px] overflow-hidden p-8 md:p-16 flex flex-col md:flex-row items-center gap-12" style="background:linear-gradient(135deg, rgba(159,65,34,0.06), rgba(253,211,77,0.08), rgba(142,244,233,0.06));">
+<div class="w-full md:w-1/3 shrink-0 relative">
+<div class="w-56 h-56 mx-auto rounded-[32px] overflow-hidden border-8 border-white shadow-2xl rotate-3 transform transition hover:rotate-0 duration-500 bg-surface-container-high flex items-center justify-center">
+<img class="w-full h-full object-cover" alt="Ketua PKK" src="assets/images/galeri/ketua.jpg" onerror="this.style.display='none';"/>
+</div>
+<div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-2xl shadow-xl">
+<span class="material-symbols-outlined text-primary text-3xl">format_quote</span>
+</div>
+</div>
+<div class="w-full md:w-2/3 text-center md:text-left">
+<h2 class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-3">Pesan Ketua Tim Penggerak</h2>
+<p class="font-headline-md text-headline-md italic text-primary mb-6 leading-relaxed">
+                        "Selamat datang di portal digital TP PKK Kalurahan Sosromenduran. Melalui platform ini, kami berupaya mempererat tali silaturahmi dan memfasilitasi kebutuhan data serta informasi bagi seluruh anggota dan masyarakat. Mari bergotong-royong demi kesejahteraan keluarga di wilayah kita."
+                    </p>
+<p class="font-headline-md text-headline-md text-primary" style="font-size:20px;">Ibu Hj. Siti Aminah</p>
+<p class="text-on-surface-variant font-label-md text-label-md">Ketua Tim Penggerak PKK Sosromenduran</p>
+</div>
+</div>
+</section>
+<!-- 10 Program Pokok Section -->
+<section class="pt-10 pb-24" style="background: #FDF3EC;">
+<div class="px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">10 Program Pokok PKK</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Pilar utama pemberdayaan masyarakat untuk menciptakan kualitas hidup keluarga yang lebih baik secara menyeluruh. Klik tiap poin untuk lihat detailnya.</p>
+</div>
+<div id="program-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"></div>
+</div>
+</section>
+
+<!-- Modal Program Pokok -->
+<div id="program-modal" class="fixed inset-0 z-[100] items-center justify-center p-4" style="display:none; background:rgba(25,28,29,0.55);" onclick="if(event.target===this) closeProgramModal();">
+<div class="bg-white rounded-2xl max-w-lg w-full p-8 relative max-h-[85vh] overflow-y-auto">
+<button onclick="closeProgramModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center hover:bg-surface-container-high transition-colors" aria-label="Tutup">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="flex flex-col items-center text-center mb-6">
+<div id="modal-icon-wrap" class="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-4" style="border:4px solid #F0B429;">
+<span id="modal-icon" class="material-symbols-outlined" style="font-size:36px;"></span>
+</div>
+<h3 id="modal-title" class="font-headline-md text-headline-md text-primary"></h3>
+</div>
+<div id="modal-body" class="text-on-surface-variant font-body-md text-body-md space-y-3 text-left"></div>
+</div>
+</div>
+
+<script>
+const PROGRAMS = [
+  { icon:'shield', color:'#B4442E', title:'Penghayatan dan Pengamalan Pancasila',
+    intro:'Dilaksanakan paling sedikit dengan cara:',
+    points:[
+      'Pembinaan karakter keluarga melalui pola asuh anak dan remaja dengan penuh cinta dan kasih sayang dalam keluarga',
+      'Pembinaan keluarga sadar hukum',
+      'Pembinaan kesadaran bela negara',
+      'Pembinaan pencegahan penyalahgunaan narkoba',
+      'Pembinaan pencegahan kekerasan dalam rumah tangga',
+      'Pembinaan pencegahan perdagangan manusia',
+      'Pembinaan pencegahan kekerasan seksual terhadap anak'
+    ]},
+  { icon:'handshake', color:'#0F6E56', title:'Gotong Royong',
+    intro:'Dilaksanakan paling sedikit dengan cara:',
+    points:[
+      'Menumbuhkan sikap kesetiakawanan sosial',
+      'Pemberdayaan lanjut usia',
+      'Pemberdayaan penyandang disabilitas',
+      'Partisipasi dalam kegiatan bakti sosial di masyarakat'
+    ]},
+  { icon:'restaurant_menu', color:'#B45309', title:'Pangan',
+    desc:'PKK mendorong keluarga memanfaatkan lahan pekarangan untuk ketahanan pangan mandiri — misalnya menanam sayuran, umbi-umbian, buah, dan bumbu dapur, serta memelihara unggas atau ikan sebagai sumber protein tambahan.'},
+  { icon:'checkroom', color:'#1D6FA5', title:'Sandang',
+    desc:'Membina kesadaran keluarga untuk berbusana rapi, sopan, dan sesuai kebutuhan sehari-hari, termasuk mendorong pemanfaatan produk sandang lokal atau hasil karya sendiri.'},
+  { icon:'home', color:'#8A5A2B', title:'Perumahan dan Tata Laksana Rumah Tangga',
+    desc:'Mendorong keluarga mewujudkan rumah yang sehat, tertata, dan layak huni — mencakup kebersihan lingkungan rumah dan penataan perabot rumah tangga yang fungsional.'},
+  { icon:'school', color:'#26215C', title:'Pendidikan dan Keterampilan',
+    intro:'Dilaksanakan paling sedikit dengan cara:',
+    points:[
+      'Pembinaan keluarga tentang wajib belajar dua belas tahun',
+      'Menggerakkan keluarga dalam peningkatan keterampilan dan pendidikan',
+      'Pengembangan Pendidikan Anak Usia Dini (PAUD) dan Bina Keluarga Balita (BKB)',
+      'Memfasilitasi peningkatan kapasitas tutor kelompok belajar Paket A, B, dan C melalui kerja sama dengan instansi terkait'
+    ]},
+  { icon:'health_and_safety', color:'#B0245A', title:'Kesehatan',
+    intro:'Dilaksanakan paling sedikit dengan cara:',
+    points:[
+      'Menggerakkan keluarga dalam perilaku hidup bersih dan sehat (PHBS)',
+      'Pembinaan peran serta masyarakat dalam upaya penurunan angka kematian ibu, bayi, dan balita',
+      'Pembinaan keluarga yang sadar gizi',
+      'Mendukung program pencegahan dan deteksi dini kanker pada perempuan',
+      'Pembinaan keluarga dalam pelaksanaan imunisasi dan pencegahan penyakit menular maupun tidak menular, serta asuhan mandiri dalam keluarga'
+    ]},
+  { icon:'account_balance', color:'#4A5568', title:'Pengembangan Kehidupan Berkoperasi',
+    desc:'Mendorong pemberdayaan ekonomi keluarga lewat kegiatan simpan pinjam dan usaha bersama, seperti Usaha Peningkatan Pendapatan Keluarga (UP2K), untuk meningkatkan kesejahteraan secara mandiri.'},
+  { icon:'eco', color:'#1D9E75', title:'Kelestarian Lingkungan Hidup',
+    desc:'Membina keluarga untuk menjaga kebersihan dan kelestarian lingkungan sekitar tempat tinggal, termasuk pengelolaan sampah rumah tangga dan penghijauan pemukiman.'},
+  { icon:'event_available', color:'#2563A8', title:'Perencanaan Sehat',
+    desc:'Membina keluarga dalam perencanaan yang matang, termasuk perencanaan Keluarga Berencana (KB) dan pengelolaan keuangan rumah tangga untuk kesejahteraan jangka panjang.'}
+];
+
+const grid = document.getElementById('program-grid');
+const TINTS = [
+  { bg:'rgba(159,65,34,0.1)', border:'rgba(159,65,34,0.2)' },
+  { bg:'rgba(201,154,46,0.15)', border:'rgba(201,154,46,0.25)' },
+  { bg:'rgba(0,106,99,0.1)', border:'rgba(0,106,99,0.2)' },
+];
+PROGRAMS.forEach((p, i) => {
+  const tint = TINTS[i % 3];
+  const card = document.createElement('button');
+  card.type = 'button';
+  card.className = 'bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all flex flex-col items-center text-center';
+  card.style.border = '1px solid ' + tint.border;
+  card.innerHTML = `<div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style="background:${tint.bg};">
+      <span class="material-symbols-outlined" style="font-size:24px; color:${p.color};">${p.icon}</span>
+    </div>
+    <h3 class="font-label-md text-label-md text-primary">${p.title}</h3>`;
+  card.addEventListener('click', () => openProgramModal(i));
+  grid.appendChild(card);
+});
+
+function openProgramModal(i) {
+  const p = PROGRAMS[i];
+  document.getElementById('modal-icon').textContent = p.icon;
+  document.getElementById('modal-icon').style.color = p.color;
+  document.getElementById('modal-icon-wrap').style.borderColor = '#F0B429';
+  document.getElementById('modal-title').textContent = p.title;
+  const body = document.getElementById('modal-body');
+  if (p.points) {
+    const letters = 'abcdefghij';
+    body.innerHTML = `<p class="mb-2">${p.intro}</p><ul class="space-y-2">` +
+      p.points.map((pt, idx) => `<li class="flex gap-2"><span class="font-bold">${letters[idx]}.</span><span>${pt}</span></li>`).join('') +
+      `</ul>`;
+  } else {
+    body.innerHTML = `<p>${p.desc}</p>`;
+  }
+  const modal = document.getElementById('program-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeProgramModal() {
+  document.getElementById('program-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeProgramModal(); });
+</script>
+</main>
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+<script src="include.js"></script>
+</body></html>
