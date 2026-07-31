@@ -126,7 +126,7 @@ Profil PKK</a>
 </section>
 <!-- Stats Section (Quick Stats) -->
 <section class="-mt-16 relative z-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
-<div class="grid grid-cols-2 md:grid-cols-5 gap-4 glass rounded-[32px] shadow-xl p-8" id="stats-section">
+<div class="grid grid-cols-2 md:grid-cols-6 gap-4 glass rounded-[32px] shadow-xl p-8" id="stats-section">
 <div class="text-center md:border-r border-outline-variant/30 last:border-0">
 <p class="text-primary font-headline-lg text-headline-lg"><span class="stat-num" data-target="10">0</span></p>
 <p class="text-on-surface-variant font-label-sm text-label-sm">Program Pokok</p>
@@ -146,6 +146,10 @@ Profil PKK</a>
 <div class="text-center">
 <p class="text-secondary font-headline-lg text-headline-lg"><span class="stat-num" data-target="81">0</span></p>
 <p class="text-on-surface-variant font-label-sm text-label-sm">Kelompok Dasawisma</p>
+</div>
+<div class="text-center md:border-r border-outline-variant/30 last:border-0">
+<p class="text-tertiary font-headline-lg text-headline-lg"><span class="stat-num" data-target="7">0</span></p>
+<p class="text-on-surface-variant font-label-sm text-label-sm">Kampung</p>
 </div>
 </div>
 </section>
@@ -233,53 +237,25 @@ Profil PKK</a>
 <script>
 const PROGRAMS = [
   { icon:'shield', color:'#B4442E', title:'Penghayatan dan Pengamalan Pancasila',
-    intro:'Dilaksanakan paling sedikit dengan cara:',
-    points:[
-      'Pembinaan karakter keluarga melalui pola asuh anak dan remaja dengan penuh cinta dan kasih sayang dalam keluarga',
-      'Pembinaan keluarga sadar hukum',
-      'Pembinaan kesadaran bela negara',
-      'Pembinaan pencegahan penyalahgunaan narkoba',
-      'Pembinaan pencegahan kekerasan dalam rumah tangga',
-      'Pembinaan pencegahan perdagangan manusia',
-      'Pembinaan pencegahan kekerasan seksual terhadap anak'
-    ]},
+    desc:'Program ini bertujuan untuk menanamkan dan menerapkan nilai-nilai luhur Pancasila dalam kehidupan keluarga sehari-hari. Fokusnya adalah pada pembinaan mental, spiritual, budi pekerti, serta menjaga kerukunan antarumat beragama di lingkungan masyarakat.',},
   { icon:'handshake', color:'#0F6E56', title:'Gotong Royong',
-    intro:'Dilaksanakan paling sedikit dengan cara:',
-    points:[
-      'Menumbuhkan sikap kesetiakawanan sosial',
-      'Pemberdayaan lanjut usia',
-      'Pemberdayaan penyandang disabilitas',
-      'Partisipasi dalam kegiatan bakti sosial di masyarakat'
-    ]},
+    desc:'Menumbuhkan kembali budaya saling membantu dan kesetiakawanan sosial. Kegiatannya bisa berupa kerja bakti membersihkan lingkungan, jimpitan (iuran sukarela), rukun kematian, atau saling tolong-menolong saat ada tetangga yang terkena musibah.'},
   { icon:'restaurant_menu', color:'#B45309', title:'Pangan',
-    desc:'PKK mendorong keluarga memanfaatkan lahan pekarangan untuk ketahanan pangan mandiri — misalnya menanam sayuran, umbi-umbian, buah, dan bumbu dapur, serta memelihara unggas atau ikan sebagai sumber protein tambahan.'},
+    desc:'Fokus pada peningkatan gizi keluarga dan ketahanan pangan. Salah satu kampanye terkenalnya adalah mendorong masyarakat untuk memanfaatkan halaman atau pekarangan rumah tangga agar ditanami sayuran, buah, atau tanaman obat keluarga (TOGA).'},
   { icon:'checkroom', color:'#1D6FA5', title:'Sandang',
-    desc:'Membina kesadaran keluarga untuk berbusana rapi, sopan, dan sesuai kebutuhan sehari-hari, termasuk mendorong pemanfaatan produk sandang lokal atau hasil karya sendiri.'},
+    desc:'Membina keluarga agar memiliki kesadaran berpakaian yang pantas, sopan, dan sesuai dengan budaya Indonesia. Selain itu, program ini juga mendorong masyarakat untuk mencintai dan menggunakan produk dalam negeri, seperti kain tenun dan batik lokal.'},
   { icon:'home', color:'#8A5A2B', title:'Perumahan dan Tata Laksana Rumah Tangga',
-    desc:'Mendorong keluarga mewujudkan rumah yang sehat, tertata, dan layak huni — mencakup kebersihan lingkungan rumah dan penataan perabot rumah tangga yang fungsional.'},
+    desc:'Mendorong keluarga agar bisa menciptakan rumah yang sehat, bersih, rapi, dan layak huni. Program ini juga mencakup edukasi tentang cara mengatur tata letak barang-barang di rumah agar aman dan sirkulasi udaranya baik.'},
   { icon:'school', color:'#26215C', title:'Pendidikan dan Keterampilan',
-    intro:'Dilaksanakan paling sedikit dengan cara:',
-    points:[
-      'Pembinaan keluarga tentang wajib belajar dua belas tahun',
-      'Menggerakkan keluarga dalam peningkatan keterampilan dan pendidikan',
-      'Pengembangan Pendidikan Anak Usia Dini (PAUD) dan Bina Keluarga Balita (BKB)',
-      'Memfasilitasi peningkatan kapasitas tutor kelompok belajar Paket A, B, dan C melalui kerja sama dengan instansi terkait'
-    ]},
+    desc:'Bertujuan untuk meningkatkan kecerdasan dan keterampilan anggota keluarga, terutama ibu dan anak, agar lebih mandiri. Kegiatannya meliputi Bina Keluarga Balita (BKB), dukungan untuk Pendidikan Anak Usia Dini (PAUD), program keaksaraan, serta pelatihan keterampilan (menjahit, membuat kerajinan, dll).'},
   { icon:'health_and_safety', color:'#B0245A', title:'Kesehatan',
-    intro:'Dilaksanakan paling sedikit dengan cara:',
-    points:[
-      'Menggerakkan keluarga dalam perilaku hidup bersih dan sehat (PHBS)',
-      'Pembinaan peran serta masyarakat dalam upaya penurunan angka kematian ibu, bayi, dan balita',
-      'Pembinaan keluarga yang sadar gizi',
-      'Mendukung program pencegahan dan deteksi dini kanker pada perempuan',
-      'Pembinaan keluarga dalam pelaksanaan imunisasi dan pencegahan penyakit menular maupun tidak menular, serta asuhan mandiri dalam keluarga'
-    ]},
+    desc:'Mewujudkan keluarga yang sehat fisik dan mental. Program ini sangat erat kaitannya dengan operasional Posyandu (Pos Pelayanan Terpadu) yang meliputi pengecekan kesehatan ibu hamil, penimbangan balita, pemenuhan gizi anak, imunisasi, dan sosialisasi kesehatan keluarga.'},
   { icon:'account_balance', color:'#4A5568', title:'Pengembangan Kehidupan Berkoperasi',
-    desc:'Mendorong pemberdayaan ekonomi keluarga lewat kegiatan simpan pinjam dan usaha bersama, seperti Usaha Peningkatan Pendapatan Keluarga (UP2K), untuk meningkatkan kesejahteraan secara mandiri.'},
+    desc:'Mendorong peningkatan ekonomi keluarga melalui pembentukan koperasi atau kelompok usaha. Salah satu bentuk nyatanya adalah program UP2K (Usaha Peningkatan Pendapatan Keluarga), yang memberikan modal dan pelatihan bagi ibu-ibu agar bisa merintis usaha kecil-kecilan.'},
   { icon:'eco', color:'#1D9E75', title:'Kelestarian Lingkungan Hidup',
-    desc:'Membina keluarga untuk menjaga kebersihan dan kelestarian lingkungan sekitar tempat tinggal, termasuk pengelolaan sampah rumah tangga dan penghijauan pemukiman.'},
+    desc:'Mengedukasi keluarga untuk menjaga kelestarian dan kebersihan lingkungan sekitar. Kegiatannya meliputi pengelolaan sampah rumah tangga (memilah sampah plastik dan organik), pembuatan kompos, menjaga kebersihan sumber air, dan penghijauan.'},
   { icon:'event_available', color:'#2563A8', title:'Perencanaan Sehat',
-    desc:'Membina keluarga dalam perencanaan yang matang, termasuk perencanaan Keluarga Berencana (KB) dan pengelolaan keuangan rumah tangga untuk kesejahteraan jangka panjang.'}
+    desc:'Membantu keluarga merencanakan masa depan yang lebih baik. Ini tidak hanya mencakup program Keluarga Berencana (KB) untuk mengatur jarak kelahiran yang sehat, tetapi juga perencanaan ekonomi keluarga, kebiasaan menabung, hingga merencanakan pendidikan anak sejak dini.'}
 ];
 
 const grid = document.getElementById('program-grid');
