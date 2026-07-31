@@ -274,6 +274,7 @@ PROGRAMS.forEach((p, i) => {
       <span class="material-symbols-outlined" style="font-size:24px; color:${p.color};">${p.icon}</span>
     </div>
     <h3 class="font-label-md text-label-md text-primary">${p.title}</h3>`;
+    
   card.addEventListener('click', () => openProgramModal(i));
   grid.appendChild(card);
 });
@@ -291,7 +292,7 @@ function openProgramModal(i) {
       p.points.map((pt, idx) => `<li class="flex gap-2"><span class="font-bold">${letters[idx]}.</span><span>${pt}</span></li>`).join('') +
       `</ul>`;
   } else {
-    body.innerHTML = `<p>${p.desc}</p>`;
+    body.innerHTML = `<p class="text-justify">${p.desc}</p>`;
   }
   const modal = document.getElementById('program-modal');
   modal.style.display = 'flex';
