@@ -211,7 +211,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script>
 // ====== DASBOR ADMIN — satu login (Firebase Auth) buat semua fitur ======
@@ -224,12 +223,29 @@ try {
     }
 } catch (e) { console.warn('Firebase belum siap:', e); }
 
+// ====== CLOUDINARY — buat nyimpen file foto/dokumen (Firebase Storage butuh kartu, ini enggak) ======
+const CLOUDINARY_CLOUD_NAME = 'sca6octi';
+const CLOUDINARY_UPLOAD_PRESET = 'pkk_sosromenduran';
+
+function uploadToCloudinary(file) {
+    const url = 'https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD_NAME + '/auto/upload';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    return fetch(url, { method: 'POST', body: formData })
+        .then(res => {
+            if (!res.ok) throw new Error('Upload ke Cloudinary gagal (status ' + res.status + ')');
+            return res.json();
+        })
+        .then(data => data.secure_url);
+}
+
 // Link rekap Google Sheets tiap Pokja — ganti '#' dengan link asli.
 const SHEETS_POKJA = [
     { label: 'Rekap Pokja I', icon: 'account_balance', url: '#' },
     { label: 'Rekap Pokja II', icon: 'school', url: '#' },
     { label: 'Rekap Pokja III', icon: 'restaurant', url: '#' },
-    { label: 'Rekap Pokja IV — Stunting', icon: 'medical_services', url: '#' }
+    { label: 'Rekap Pokja IV — Stunting', icon: 'medical_services', url: 'https://docs.google.com/spreadsheets/d/1NifHemWpvBrfFWwsV4Gq9z9F7ozYc9tXp1-IyII_yro/edit?usp=sharing' }
 ];
 const dashLinksBox = document.getElementById('dash-links');
 SHEETS_POKJA.forEach(s => {
@@ -310,9 +326,7 @@ document.getElementById('galeriUploadForm').addEventListener('submit', function 
     icon.textContent = 'hourglass_top';
 
     const path = 'galeri/' + Date.now() + '-' + file.name;
-    const ref = firebase.storage().ref().child(path);
-    ref.put(file)
-        .then(snap => snap.ref.getDownloadURL())
+    uploadToCloudinary(file)
         .then(url => firebase.firestore().collection('galeri').add({
             judul: judul, tanggal: tanggal, kategori: kategori, fotoUrl: url, fotoPath: path,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -348,16 +362,12 @@ document.getElementById('eduUploadForm').addEventListener('submit', function (e)
 
     const tipeFile = file.name.split('.').pop().toUpperCase();
     const filePath = 'edukasi/' + Date.now() + '-' + file.name;
-    const fileRef = firebase.storage().ref().child(filePath);
 
-    fileRef.put(file)
-        .then(snap => snap.ref.getDownloadURL())
+    uploadToCloudinary(file)
         .then(fileUrl => {
             if (coverFile) {
                 const coverPath = 'edukasi-covers/' + Date.now() + '-' + coverFile.name;
-                const coverRef = firebase.storage().ref().child(coverPath);
-                return coverRef.put(coverFile)
-                    .then(snap => snap.ref.getDownloadURL())
+                return uploadToCloudinary(coverFile)
                     .then(coverUrl => ({ fileUrl, coverUrl, filePath, coverPath }));
             }
             return { fileUrl, coverUrl: '', filePath, coverPath: '' };
@@ -396,10 +406,8 @@ function loadGalList() {
                 row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.tanggal || ''} &middot; ${d.kategori || ''}</p></div>
                     <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
                 row.querySelector('button').addEventListener('click', () => {
-                    if (!confirm('Hapus foto "' + (d.judul || '') + '"? Tindakan ini gak bisa dibatalkan.')) return;
-                    const tasks = [firebase.firestore().collection('galeri').doc(doc.id).delete()];
-                    if (d.fotoPath) tasks.push(firebase.storage().ref().child(d.fotoPath).delete().catch(() => {}));
-                    Promise.all(tasks).then(loadGalList);
+                    if (!confirm('Hapus foto "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
+                    firebase.firestore().collection('galeri').doc(doc.id).delete().then(loadGalList);
                 });
                 box.appendChild(row);
             });
@@ -421,11 +429,8 @@ function loadEduList() {
                 row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.pokja || ''} &middot; ${d.tipeFile || ''}</p></div>
                     <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
                 row.querySelector('button').addEventListener('click', () => {
-                    if (!confirm('Hapus materi "' + (d.judul || '') + '"? Tindakan ini gak bisa dibatalkan.')) return;
-                    const tasks = [firebase.firestore().collection('edukasi').doc(doc.id).delete()];
-                    if (d.filePath) tasks.push(firebase.storage().ref().child(d.filePath).delete().catch(() => {}));
-                    if (d.coverPath) tasks.push(firebase.storage().ref().child(d.coverPath).delete().catch(() => {}));
-                    Promise.all(tasks).then(loadEduList);
+                    if (!confirm('Hapus materi "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
+                    firebase.firestore().collection('edukasi').doc(doc.id).delete().then(loadEduList);
                 });
                 box.appendChild(row);
             });
