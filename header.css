@@ -70,3 +70,21 @@ body.has-hero #site-header.scrolled .admin-btn {
   border-color: transparent;
   color: #ffffff;
 }
+
+/* ---------- Mobile menu dropdown ---------- */
+#mobile-menu {
+  background-color: rgba(255,255,255,0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #c3c6d1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+#mobile-menu.flex { display: flex !important; }
+#mobile-menu .mobile-nav-link {
+  color: #2B2118 !important;
+  text-shadow: none !important;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+#mobile-menu .mobile-nav-link:last-child { border-bottom: none; }
+#mobile-menu .mobile-nav-link[aria-current="page"] { color: #9F4122 !important; font-weight: 700; }

@@ -35,6 +35,35 @@
       }
       window.addEventListener('scroll', onScroll);
       onScroll();
+
+      // Toggle menu mobile (tombol hamburger)
+      var menuBtn = document.getElementById('mobile-menu-btn');
+      var mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function () {
+          var isOpen = mobileMenu.classList.contains('flex');
+          if (isOpen) {
+            mobileMenu.classList.remove('flex');
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.querySelector('.menu-icon').textContent = 'menu';
+          } else {
+            mobileMenu.classList.remove('hidden');
+            mobileMenu.classList.add('flex');
+            menuBtn.setAttribute('aria-expanded', 'true');
+            menuBtn.querySelector('.menu-icon').textContent = 'close';
+          }
+        });
+        // Tutup menu otomatis kalau salah satu link diklik
+        mobileMenu.querySelectorAll('a').forEach(function (a) {
+          a.addEventListener('click', function () {
+            mobileMenu.classList.remove('flex');
+            mobileMenu.classList.add('hidden');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.querySelector('.menu-icon').textContent = 'menu';
+          });
+        });
+      }
     })
     .catch(function (err) {
       console.error('Gagal memuat header:', err);
