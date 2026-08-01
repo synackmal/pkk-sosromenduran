@@ -413,12 +413,22 @@ document.getElementById('eduUploadForm').addEventListener('submit', function (e)
     const tipeFile = file.name.split('.').pop().toUpperCase();
     const filePath = 'edukasi/' + Date.now() + '-' + file.name;
 
+    // Cloudinary bisa otomatis "screenshot" halaman pertama PDF jadi gambar — cukup ubah
+    // sedikit URL hasil upload-nya, gak perlu proses tambahan. Cuma jalan buat PDF
+    // (PPTX/DOCX gak didukung otomatis, tetap butuh cover manual kalau mau ada gambarnya).
+    function autoPdfCoverUrl(fileUrl) {
+        return fileUrl.replace('/upload/', '/upload/pg_1,f_jpg/');
+    }
+
     uploadToCloudinary(file)
         .then(fileUrl => {
             if (coverFile) {
                 const coverPath = 'edukasi-covers/' + Date.now() + '-' + coverFile.name;
                 return uploadToCloudinary(coverFile)
                     .then(coverUrl => ({ fileUrl, coverUrl, filePath, coverPath }));
+            }
+            if (tipeFile === 'PDF') {
+                return { fileUrl, coverUrl: autoPdfCoverUrl(fileUrl), filePath, coverPath: '' };
             }
             return { fileUrl, coverUrl: '', filePath, coverPath: '' };
         })
