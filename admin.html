@@ -107,6 +107,7 @@
 <!-- PAGE: Dashboard -->
 <div id="page-dashboard" class="dash-page active">
 <h1 class="font-headline-lg text-headline-lg text-primary mb-2">Halo, <span id="dash-user-email">Admin</span> 👋</h1>
+<p id="dash-role-label" class="text-sm font-bold text-secondary mb-4"></p>
 <p class="text-on-surface-variant mb-8">Pilih menu di samping buat mulai kelola konten website PKK Sosromenduran.</p>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 <div class="side-link-card p-6 rounded-xl border border-outline-variant bg-white cursor-pointer hover:shadow-lg hover:border-primary transition-all" data-page="page-galeri">
@@ -136,12 +137,20 @@
 <h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Tambah Foto</h3>
 <form id="galeriUploadForm" class="space-y-4">
 <input type="text" id="gal-judul" placeholder="Judul kegiatan" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
-<input type="text" id="gal-tanggal" placeholder="Tanggal (contoh: 12 Okt 2025)" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<label class="text-sm text-on-surface-variant block">Tanggal kegiatan</label>
+<input type="date" id="gal-tanggal" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
 <select id="gal-kategori" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
 <option value="">Pilih kategori</option>
 <option value="sosial">Kegiatan Sosial</option>
 <option value="pelatihan">Pelatihan</option>
 <option value="rapat">Rapat Pleno</option>
+</select>
+<select id="gal-pokja" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<option value="">Pilih Pokja</option>
+<option value="Pokja I">Pokja I</option>
+<option value="Pokja II">Pokja II</option>
+<option value="Pokja III">Pokja III</option>
+<option value="Pokja IV">Pokja IV</option>
 </select>
 <input type="file" id="gal-file" accept="image/*" required class="w-full text-sm">
 <button type="submit" class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-label-md font-bold flex items-center justify-center gap-2">
@@ -242,15 +251,16 @@ function uploadToCloudinary(file) {
 
 // Link rekap Google Sheets tiap Pokja — ganti '#' dengan link asli.
 const SHEETS_POKJA = [
-    { label: 'Rekap Pokja I', icon: 'account_balance', url: '#' },
-    { label: 'Rekap Pokja II', icon: 'school', url: '#' },
-    { label: 'Rekap Pokja III', icon: 'restaurant', url: '#' },
-    { label: 'Rekap Pokja IV — Stunting', icon: 'medical_services', url: 'https://docs.google.com/spreadsheets/d/1NifHemWpvBrfFWwsV4Gq9z9F7ozYc9tXp1-IyII_yro/edit?usp=sharing' }
+    { label: 'Rekap Pokja I', pokja: 'Pokja I', icon: 'account_balance', url: '#' },
+    { label: 'Rekap Pokja II', pokja: 'Pokja II', icon: 'school', url: '#' },
+    { label: 'Rekap Pokja III', pokja: 'Pokja III', icon: 'restaurant', url: '#' },
+    { label: 'Rekap Pokja IV — Stunting', pokja: 'Pokja IV', icon: 'medical_services', url: 'https://docs.google.com/spreadsheets/d/1NifHemWpvBrfFWwsV4Gq9z9F7ozYc9tXp1-IyII_yro/edit?usp=sharing' }
 ];
 const dashLinksBox = document.getElementById('dash-links');
 SHEETS_POKJA.forEach(s => {
     const a = document.createElement('a');
     a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
+    a.dataset.pokja = s.pokja;
     a.className = 'p-6 rounded-xl border border-outline-variant bg-white hover:shadow-lg hover:border-secondary transition-all flex items-center gap-4';
     a.innerHTML = `<div class="w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center text-primary flex-shrink-0"><span class="material-symbols-outlined">${s.icon}</span></div>
         <div><p class="font-headline-md text-headline-md text-primary text-lg">${s.label}</p><p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Buka Google Sheets &rarr;</p></div>`;
@@ -278,10 +288,15 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPassword').value;
     firebase.auth().signInWithEmailAndPassword(email, pass)
-        .then(() => {
+        .then(cred => {
             document.getElementById('login-view').style.display = 'none';
             document.getElementById('dashboard-view').style.display = 'flex';
             document.getElementById('dash-user-email').textContent = email;
+            return firebase.firestore().collection('admins').doc(cred.user.uid).get();
+        })
+        .then(roleDoc => {
+            currentRole = (roleDoc.exists && roleDoc.data().role) ? roleDoc.data().role : 'ketua';
+            applyRoleRestrictions();
             loadGalList();
             loadEduList();
         })
@@ -290,6 +305,34 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
             errEl.style.display = 'block';
         });
 });
+
+// ====== PEMBATASAN AKSES PER-ROLE ======
+// currentRole nilainya: 'ketua' (bisa akses semua) atau 'Pokja I' / 'Pokja II' / 'Pokja III' / 'Pokja IV' (cuma punya sendiri)
+let currentRole = 'ketua';
+
+function applyRoleRestrictions() {
+    const isKetua = currentRole === 'ketua';
+
+    // Kunci dropdown Pokja di form upload kalau bukan Ketua PKK
+    ['gal-pokja', 'edu-pokja'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (!isKetua) {
+            el.value = currentRole;
+            el.disabled = true;
+            el.classList.add('bg-surface-container-low');
+        }
+    });
+
+    // Tampilkan label role di header dashboard
+    const roleLabel = document.getElementById('dash-role-label');
+    if (roleLabel) roleLabel.textContent = isKetua ? 'Ketua PKK (akses semua Pokja)' : 'Ketua ' + currentRole + ' (akses terbatas)';
+
+    // Filter kartu Pantau Pendataan
+    document.querySelectorAll('#dash-links a').forEach(a => {
+        if (!isKetua && a.dataset.pokja !== currentRole) a.style.display = 'none';
+    });
+}
 
 function dashLogout() {
     if (cmsReady) firebase.auth().signOut();
@@ -315,8 +358,15 @@ document.getElementById('galeriUploadForm').addEventListener('submit', function 
     e.preventDefault();
     const file = document.getElementById('gal-file').files[0];
     const judul = document.getElementById('gal-judul').value;
-    const tanggal = document.getElementById('gal-tanggal').value;
+    const tanggalRaw = document.getElementById('gal-tanggal').value;
+    const BULAN_ID = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    let tanggal = tanggalRaw;
+    if (tanggalRaw) {
+        const d = new Date(tanggalRaw + 'T00:00:00');
+        tanggal = d.getDate() + ' ' + BULAN_ID[d.getMonth()] + ' ' + d.getFullYear();
+    }
     const kategori = document.getElementById('gal-kategori').value;
+    const pokja = document.getElementById('gal-pokja').value;
     const msg = document.getElementById('gal-upload-msg');
     const icon = document.getElementById('gal-submit-icon');
     if (!file) return;
@@ -328,7 +378,7 @@ document.getElementById('galeriUploadForm').addEventListener('submit', function 
     const path = 'galeri/' + Date.now() + '-' + file.name;
     uploadToCloudinary(file)
         .then(url => firebase.firestore().collection('galeri').add({
-            judul: judul, tanggal: tanggal, kategori: kategori, fotoUrl: url, fotoPath: path,
+            judul: judul, tanggal: tanggal, kategori: kategori, pokja: pokja, fotoUrl: url, fotoPath: path,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }))
         .then(() => {
@@ -397,13 +447,14 @@ function loadGalList() {
     if (!cmsReady) return;
     firebase.firestore().collection('galeri').orderBy('createdAt', 'desc').get()
         .then(snap => {
-            if (snap.empty) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada foto.</p>'; return; }
+            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole);
+            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada foto.</p>'; return; }
             box.innerHTML = '';
-            snap.forEach(doc => {
+            docs.forEach(doc => {
                 const d = doc.data();
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
-                row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.tanggal || ''} &middot; ${d.kategori || ''}</p></div>
+                row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.tanggal || ''} &middot; ${d.pokja || ''}</p></div>
                     <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
                 row.querySelector('button').addEventListener('click', () => {
                     if (!confirm('Hapus foto "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
@@ -420,9 +471,10 @@ function loadEduList() {
     if (!cmsReady) return;
     firebase.firestore().collection('edukasi').orderBy('createdAt', 'desc').get()
         .then(snap => {
-            if (snap.empty) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada materi.</p>'; return; }
+            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole);
+            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada materi.</p>'; return; }
             box.innerHTML = '';
-            snap.forEach(doc => {
+            docs.forEach(doc => {
                 const d = doc.data();
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
