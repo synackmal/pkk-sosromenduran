@@ -78,6 +78,7 @@
 <div class="side-link" data-page="page-galeri"><span class="material-symbols-outlined">photo_library</span>Kelola Galeri</div>
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
+<div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 </nav>
 </div>
 <div class="px-3 pb-6 space-y-1 border-t border-white/10 pt-4">
@@ -96,6 +97,7 @@
 <div class="side-link" data-page="page-galeri"><span class="material-symbols-outlined">photo_library</span>Kelola Galeri</div>
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
+<div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 <a href="index.html" class="side-link" style="color:#8EF4E9;"><span class="material-symbols-outlined">visibility</span>Lihat Website</a>
 <div class="side-link" style="color:#FFB4A8;" onclick="dashLogout()"><span class="material-symbols-outlined">logout</span>Keluar</div>
 </div>
@@ -207,6 +209,30 @@
 <div class="mt-8 p-6 rounded-xl bg-surface-container-low border border-outline-variant flex items-start gap-3">
 <span class="material-symbols-outlined text-secondary">info</span>
 <p class="font-body-md text-body-md text-on-surface-variant">Link Google Sheets diset "hanya yang punya link" sebagai lapisan keamanan utama — pastikan itu tetap aktif.</p>
+</div>
+</div>
+
+<!-- PAGE: Kelola Dokumen SK (khusus Ketua PKK) -->
+<div id="page-dokumen" class="dash-page">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2" style="font-size:24px;">Kelola Dokumen SK</h1>
+<p class="text-on-surface-variant mb-6">Upload Surat Keputusan (SK) baru yang otomatis muncul di halaman Dokumen. Menu ini cuma bisa diakses Ketua PKK.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Tambah SK</h3>
+<form id="skUploadForm" class="space-y-4">
+<input type="text" id="sk-judul" placeholder="Judul SK, contoh: SK Inovasi Program 2026" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<label class="text-sm text-on-surface-variant block">File SK (PDF)</label>
+<input type="file" id="sk-file" accept=".pdf" required class="w-full text-sm">
+<button type="submit" class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-label-md font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" id="sk-submit-icon">upload</span><span id="sk-submit-text">Upload SK</span>
+</button>
+<p id="sk-upload-msg" class="text-sm"></p>
+</form>
+</div>
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">SK Tersimpan</h3>
+<div id="sk-list" class="space-y-2 max-h-96 overflow-y-auto"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
+</div>
 </div>
 </div>
 
@@ -332,6 +358,12 @@ function applyRoleRestrictions() {
     document.querySelectorAll('#dash-links a').forEach(a => {
         if (!isKetua && a.dataset.pokja !== currentRole) a.style.display = 'none';
     });
+
+    // Menu "Kelola Dokumen SK" cuma buat Ketua PKK
+    document.querySelectorAll('.ketua-only').forEach(el => {
+        el.style.display = isKetua ? 'flex' : 'none';
+    });
+    if (isKetua) loadSkList();
 }
 
 function dashLogout() {
@@ -493,6 +525,63 @@ function loadEduList() {
                 row.querySelector('button').addEventListener('click', () => {
                     if (!confirm('Hapus materi "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
                     firebase.firestore().collection('edukasi').doc(doc.id).delete().then(loadEduList);
+                });
+                box.appendChild(row);
+            });
+        })
+        .catch(() => { box.innerHTML = '<p class="text-sm text-error">Gagal memuat daftar.</p>'; });
+}
+
+// Upload SK (khusus Ketua PKK — dijamin juga lewat Firestore Security Rules)
+document.getElementById('skUploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const file = document.getElementById('sk-file').files[0];
+    const judul = document.getElementById('sk-judul').value;
+    const msg = document.getElementById('sk-upload-msg');
+    const icon = document.getElementById('sk-submit-icon');
+    if (!file) return;
+
+    msg.textContent = 'Mengupload...';
+    msg.className = 'text-sm text-on-surface-variant';
+    icon.textContent = 'hourglass_top';
+
+    const filePath = 'dokumen-sk/' + Date.now() + '-' + file.name;
+
+    uploadToCloudinary(file)
+        .then(fileUrl => firebase.firestore().collection('dokumen_sk').add({
+            judul: judul, fileUrl: fileUrl, filePath: filePath,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }))
+        .then(() => {
+            msg.textContent = 'Berhasil diupload! Cek halaman Dokumen.';
+            msg.className = 'text-sm text-secondary font-bold';
+            icon.textContent = 'upload';
+            document.getElementById('skUploadForm').reset();
+            loadSkList();
+        })
+        .catch(err => {
+            msg.textContent = 'Gagal upload: ' + err.message;
+            msg.className = 'text-sm text-error';
+            icon.textContent = 'upload';
+        });
+});
+
+function loadSkList() {
+    const box = document.getElementById('sk-list');
+    if (!box || !cmsReady) return;
+    firebase.firestore().collection('dokumen_sk').orderBy('createdAt', 'desc').get()
+        .then(snap => {
+            if (snap.empty) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada SK.</p>'; return; }
+            box.innerHTML = '';
+            snap.forEach(doc => {
+                const d = doc.data();
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
+                row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p></div>
+                    <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
+                row.querySelector('button').addEventListener('click', () => {
+                    if (!confirm('Hapus SK "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
+                    firebase.firestore().collection('dokumen_sk').doc(doc.id).delete().then(loadSkList);
                 });
                 box.appendChild(row);
             });

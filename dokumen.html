@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Dokumen - TP PKK Sosromenduran</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"/><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><link rel="stylesheet" href="header.css"><script id="tailwind-config">try{
+      tailwind.config = { darkMode: "class", theme: { extend: {
+            "colors": {"surface-container-lowest": "#ffffff","on-tertiary-fixed-variant": "#00504A","tertiary-fixed": "#8EF4E9","on-secondary-fixed": "#241A00","surface-bright": "#FBF9F8","surface-container-high": "#EAE8E7","on-secondary": "#ffffff","tertiary": "#006A63","outline": "#737780","primary-container": "#752305","surface-container": "#F0EDED","background": "#FBF9F8","secondary-fixed": "#FFE087","surface": "#FBF9F8","surface-tint": "#9F4122","surface-variant": "#E4E2E1","error-container": "#ffdad6","primary-fixed": "#FFDBD0","outline-variant": "#c3c6d1","on-primary-fixed-variant": "#9F4122","error": "#ba1a1a","secondary-fixed-dim": "#FDD34D","surface-dim": "#DCD9D9","on-tertiary-fixed": "#00201D","on-error-container": "#93000a","secondary-container": "#FDD34D","on-primary-fixed": "#9F4122","on-tertiary-container": "#004842","on-surface": "#1B1C1C","surface-container-highest": "#E4E2E1","inverse-on-surface": "#f0f1f2","inverse-surface": "#2e3132","on-background": "#1B1C1C","on-tertiary": "#ffffff","on-secondary-container": "#574500","on-primary-container": "#FFDBD0","tertiary-container": "#8EF4E9","on-secondary-fixed-variant": "#574500","on-surface-variant": "#56423C","inverse-primary": "#FFB59E","primary-fixed-dim": "#FFB59E","primary": "#9F4122","surface-container-low": "#F5F3F3","on-error": "#ffffff","tertiary-fixed-dim": "#71D7CD","secondary": "#C99A2E","on-primary": "#ffffff"},
+            "borderRadius": {"DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px"},
+            "spacing": {"margin-desktop": "40px","margin-mobile": "16px","unit": "4px","gutter": "24px","container-max": "1280px"},
+            "fontFamily": {"headline-lg": ["Inter"],"headline-md": ["Inter"],"headline-xl": ["Inter"],"label-md": ["Inter"],"label-sm": ["Inter"],"body-lg": ["Inter"],"body-md": ["Inter"]},
+            "fontSize": {"headline-lg": ["32px", {"lineHeight": "1.25", "letterSpacing": "-0.01em", "fontWeight": "700"}],"headline-md": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],"headline-xl": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],"label-md": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600"}],"label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "500"}],"body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],"body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]}
+      }}}
+    }catch(_e){}</script></head><body class="bg-background text-on-surface">
+<div id="header-placeholder"></div>
+<main class="pt-24 pb-20 max-w-container-max mx-auto px-margin-desktop">
+
+<section class="mb-12">
+<span class="inline-block px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm mb-4">Arsip Administrasi</span>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-4">Dokumen</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Kumpulan dokumen resmi dan formulir yang bisa diunduh untuk keperluan administrasi PKK Kalurahan Sosromenduran.</p>
+</section>
+
+<!-- SK Inovasi: daftar dinamis dari Firestore, dikelola Ketua PKK lewat Admin -->
+<section class="mb-16">
+<h2 class="font-headline-md text-headline-md text-primary mb-6" style="font-size:20px;">SK Inovasi</h2>
+<div id="sk-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<p class="text-on-surface-variant col-span-full">Memuat...</p>
+</div>
+</section>
+
+<!-- Template Presensi: file statis, jarang berubah -->
+<section>
+<h2 class="font-headline-md text-headline-md text-primary mb-6" style="font-size:20px;">Formulir</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-8 rounded-2xl border border-outline-variant bg-white flex flex-col">
+<div class="w-14 h-14 rounded-xl bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed mb-6"><span class="material-symbols-outlined text-3xl">fact_check</span></div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2" style="font-size:18px;">Template Daftar Hadir</h3>
+<p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-grow">Formulir presensi kosong yang bisa dicetak dan digunakan untuk mencatat kehadiran peserta di setiap kegiatan PKK.</p>
+<div class="flex gap-2">
+<button type="button" onclick="openPreviewStatic('assets/documents/template-presensi.docx')" class="flex-1 inline-flex items-center justify-center gap-2 border border-primary text-primary px-4 py-3 rounded-lg font-label-md text-label-sm hover:bg-primary-fixed transition-colors"><span class="material-symbols-outlined text-sm">visibility</span>Preview</button>
+<a href="assets/documents/template-presensi.docx" download class="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-4 py-3 rounded-lg font-label-md text-label-sm hover:opacity-90 transition-all"><span class="material-symbols-outlined text-sm">download</span>Unduh</a>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<div id="footer-placeholder"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+// Preview file statis (bukan dari Firestore) — sama seperti dokumen materi Edukasi:
+// PDF dibuka langsung; file lain butuh website online (gak jalan pas masih di Live Server lokal).
+function openPreviewStatic(url) {
+    const ext = url.split('.').pop().toLowerCase();
+    if (ext === 'pdf') {
+        window.open(url, '_blank');
+        return;
+    }
+    const absoluteUrl = new URL(url, window.location.href).href;
+    if (absoluteUrl.indexOf('localhost') !== -1 || absoluteUrl.indexOf('127.0.0.1') !== -1) {
+        alert('Preview file ini cuma bisa jalan setelah website online. Coba tombol Unduh dulu.');
+        return;
+    }
+    window.open('https://docs.google.com/viewer?url=' + encodeURIComponent(absoluteUrl) + '&embedded=true', '_blank');
+}
+function openPreviewCloudinary(url) {
+    window.open(url, '_blank');
+}
+
+const SK_DEMO = [
+    { judul: 'SK Inovasi Program PKK 2026', fileUrl: 'assets/documents/sk-inovasi.pdf' }
+];
+
+let cmsReady = false;
+try {
+    if (window.firebaseConfig && window.firebaseConfig.apiKey && window.firebaseConfig.apiKey.indexOf('GANTI_DENGAN') !== 0) {
+        firebase.initializeApp(window.firebaseConfig);
+        cmsReady = true;
+    }
+} catch (e) { console.warn('Firebase belum siap:', e); }
+
+function renderSkGrid(items) {
+    const grid = document.getElementById('sk-grid');
+    if (items.length === 0) {
+        grid.innerHTML = '<p class="text-on-surface-variant col-span-full">Belum ada SK yang diupload.</p>';
+        return;
+    }
+    grid.innerHTML = '';
+    items.forEach(it => {
+        const card = document.createElement('div');
+        card.className = 'p-8 rounded-2xl border border-outline-variant bg-white flex flex-col';
+        card.innerHTML = `
+            <div class="w-14 h-14 rounded-xl bg-primary-fixed flex items-center justify-center text-primary mb-6"><span class="material-symbols-outlined text-3xl">verified</span></div>
+            <h3 class="font-headline-md text-headline-md text-primary mb-2" style="font-size:18px;">${it.judul}</h3>
+            <p class="text-on-surface-variant font-body-md text-body-md mb-6 flex-grow">Surat Keputusan mengenai program inovasi TP PKK Kalurahan Sosromenduran.</p>
+            <div class="flex gap-2">
+                <button type="button" class="sk-preview-btn flex-1 inline-flex items-center justify-center gap-2 border border-primary text-primary px-4 py-3 rounded-lg font-label-md text-label-sm hover:bg-primary-fixed transition-colors"><span class="material-symbols-outlined text-sm">visibility</span>Preview</button>
+                <a href="${it.fileUrl}" download class="flex-1 inline-flex items-center justify-center gap-2 bg-primary text-on-primary px-4 py-3 rounded-lg font-label-md text-label-sm hover:opacity-90 transition-all"><span class="material-symbols-outlined text-sm">download</span>Unduh</a>
+            </div>`;
+        card.querySelector('.sk-preview-btn').addEventListener('click', () => {
+            if (it.source === 'firestore') openPreviewCloudinary(it.fileUrl);
+            else openPreviewStatic(it.fileUrl);
+        });
+        grid.appendChild(card);
+    });
+}
+
+if (!cmsReady) {
+    renderSkGrid(SK_DEMO);
+} else {
+    firebase.firestore().collection('dokumen_sk').orderBy('createdAt', 'desc').get()
+        .then(snap => {
+            const items = snap.docs.map(doc => ({ judul: doc.data().judul, fileUrl: doc.data().fileUrl, source: 'firestore' }));
+            renderSkGrid(items.length ? items : SK_DEMO);
+        })
+        .catch(err => {
+            console.warn('Gagal ambil data SK dari Firestore, pakai data contoh.', err);
+            renderSkGrid(SK_DEMO);
+        });
+}
+</script>
+<script src="include.js"></script>
+</body></html>
