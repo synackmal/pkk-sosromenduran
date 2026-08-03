@@ -163,6 +163,7 @@ function loadMaterials() {
                 materials = [];
                 snap.forEach(doc => {
                     const d = doc.data();
+                    if (d.arsip) return; // item yang diarsipkan gak ditampilin ke publik
                     materials.push({
                         cat: d.pokja, title: d.judul, desc: '', type: d.tipeFile,
                         icon: iconFor(d.tipeFile), file: d.fileUrl, cover: d.coverUrl || '', source: 'firebase'

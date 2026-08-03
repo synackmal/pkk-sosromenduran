@@ -163,6 +163,10 @@
 </div>
 <div class="p-6 rounded-xl border border-outline-variant bg-white">
 <h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Foto Tersimpan</h3>
+<div class="flex gap-2 mb-4">
+<button type="button" class="gal-tab-btn px-4 py-1.5 rounded-full text-sm font-bold bg-primary text-on-primary" data-tab="aktif">Aktif</button>
+<button type="button" class="gal-tab-btn px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-low text-on-surface-variant" data-tab="arsip">Arsip</button>
+</div>
 <div id="gal-list" class="space-y-2 max-h-96 overflow-y-auto"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
 </div>
 </div>
@@ -196,6 +200,10 @@
 </div>
 <div class="p-6 rounded-xl border border-outline-variant bg-white">
 <h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Materi Tersimpan</h3>
+<div class="flex gap-2 mb-4">
+<button type="button" class="edu-tab-btn px-4 py-1.5 rounded-full text-sm font-bold bg-primary text-on-primary" data-tab="aktif">Aktif</button>
+<button type="button" class="edu-tab-btn px-4 py-1.5 rounded-full text-sm font-bold bg-surface-container-low text-on-surface-variant" data-tab="arsip">Arsip</button>
+</div>
 <div id="edu-list" class="space-y-2 max-h-96 overflow-y-auto"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
 </div>
 </div>
@@ -410,7 +418,7 @@ document.getElementById('galeriUploadForm').addEventListener('submit', function 
     const path = 'galeri/' + Date.now() + '-' + file.name;
     uploadToCloudinary(file)
         .then(url => firebase.firestore().collection('galeri').add({
-            judul: judul, tanggal: tanggal, kategori: kategori, pokja: pokja, fotoUrl: url, fotoPath: path,
+            judul: judul, tanggal: tanggal, kategori: kategori, pokja: pokja, fotoUrl: url, fotoPath: path, arsip: false,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }))
         .then(() => {
@@ -466,7 +474,7 @@ document.getElementById('eduUploadForm').addEventListener('submit', function (e)
         })
         .then(({ fileUrl, coverUrl, filePath, coverPath }) => firebase.firestore().collection('edukasi').add({
             judul: judul, pokja: pokja, tipeFile: tipeFile, fileUrl: fileUrl, coverUrl: coverUrl,
-            filePath: filePath, coverPath: coverPath,
+            filePath: filePath, coverPath: coverPath, arsip: false,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }))
         .then(() => {
@@ -484,22 +492,44 @@ document.getElementById('eduUploadForm').addEventListener('submit', function (e)
 });
 
 // ====== DAFTAR KONTEN + HAPUS ======
+let galTab = 'aktif';
+let eduTab = 'aktif';
+
 function loadGalList() {
     const box = document.getElementById('gal-list');
     if (!cmsReady) return;
     firebase.firestore().collection('galeri').orderBy('createdAt', 'desc').get()
         .then(snap => {
-            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole);
-            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada foto.</p>'; return; }
+            const docs = snap.docs
+                .filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole)
+                .filter(doc => galTab === 'arsip' ? !!doc.data().arsip : !doc.data().arsip);
+            if (docs.length === 0) {
+                box.innerHTML = '<p class="text-sm text-on-surface-variant">' + (galTab === 'arsip' ? 'Belum ada foto yang diarsipkan.' : 'Belum ada foto.') + '</p>';
+                return;
+            }
             box.innerHTML = '';
             docs.forEach(doc => {
                 const d = doc.data();
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
+                const actionsHtml = galTab === 'arsip'
+                    ? `<button type="button" class="btn-restore text-secondary hover:bg-secondary-fixed p-2 rounded-lg" aria-label="Kembalikan"><span class="material-symbols-outlined text-[18px]">restore</span></button>
+                       <button type="button" class="btn-delete text-error hover:bg-error-container p-2 rounded-lg" aria-label="Hapus Permanen"><span class="material-symbols-outlined text-[18px]">delete_forever</span></button>`
+                    : `<button type="button" class="btn-archive text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg" aria-label="Arsipkan"><span class="material-symbols-outlined text-[18px]">archive</span></button>`;
                 row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.tanggal || ''} &middot; ${d.pokja || ''}</p></div>
-                    <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
-                row.querySelector('button').addEventListener('click', () => {
-                    if (!confirm('Hapus foto "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
+                    <div class="flex-shrink-0 flex items-center">${actionsHtml}</div>`;
+                const btnArchive = row.querySelector('.btn-archive');
+                if (btnArchive) btnArchive.addEventListener('click', () => {
+                    if (!confirm('Arsipkan foto "' + (d.judul || '') + '"? Foto akan disembunyikan dari website, tapi masih bisa dimunculkan lagi lewat tab Arsip.')) return;
+                    firebase.firestore().collection('galeri').doc(doc.id).update({ arsip: true }).then(loadGalList);
+                });
+                const btnRestore = row.querySelector('.btn-restore');
+                if (btnRestore) btnRestore.addEventListener('click', () => {
+                    firebase.firestore().collection('galeri').doc(doc.id).update({ arsip: false }).then(loadGalList);
+                });
+                const btnDelete = row.querySelector('.btn-delete');
+                if (btnDelete) btnDelete.addEventListener('click', () => {
+                    if (!confirm('Hapus PERMANEN foto "' + (d.judul || '') + '"? Tindakan ini gak bisa dibatalkan.')) return;
                     firebase.firestore().collection('galeri').doc(doc.id).delete().then(loadGalList);
                 });
                 box.appendChild(row);
@@ -507,23 +537,55 @@ function loadGalList() {
         })
         .catch(() => { box.innerHTML = '<p class="text-sm text-error">Gagal memuat daftar.</p>'; });
 }
+document.querySelectorAll('.gal-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        galTab = btn.dataset.tab;
+        document.querySelectorAll('.gal-tab-btn').forEach(b => {
+            const active = b.dataset.tab === galTab;
+            b.classList.toggle('bg-primary', active);
+            b.classList.toggle('text-on-primary', active);
+            b.classList.toggle('bg-surface-container-low', !active);
+            b.classList.toggle('text-on-surface-variant', !active);
+        });
+        loadGalList();
+    });
+});
 
 function loadEduList() {
     const box = document.getElementById('edu-list');
     if (!cmsReady) return;
     firebase.firestore().collection('edukasi').orderBy('createdAt', 'desc').get()
         .then(snap => {
-            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole);
-            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada materi.</p>'; return; }
+            const docs = snap.docs
+                .filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole)
+                .filter(doc => eduTab === 'arsip' ? !!doc.data().arsip : !doc.data().arsip);
+            if (docs.length === 0) {
+                box.innerHTML = '<p class="text-sm text-on-surface-variant">' + (eduTab === 'arsip' ? 'Belum ada materi yang diarsipkan.' : 'Belum ada materi.') + '</p>';
+                return;
+            }
             box.innerHTML = '';
             docs.forEach(doc => {
                 const d = doc.data();
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
+                const actionsHtml = eduTab === 'arsip'
+                    ? `<button type="button" class="btn-restore text-secondary hover:bg-secondary-fixed p-2 rounded-lg" aria-label="Kembalikan"><span class="material-symbols-outlined text-[18px]">restore</span></button>
+                       <button type="button" class="btn-delete text-error hover:bg-error-container p-2 rounded-lg" aria-label="Hapus Permanen"><span class="material-symbols-outlined text-[18px]">delete_forever</span></button>`
+                    : `<button type="button" class="btn-archive text-on-surface-variant hover:bg-surface-container-low p-2 rounded-lg" aria-label="Arsipkan"><span class="material-symbols-outlined text-[18px]">archive</span></button>`;
                 row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.pokja || ''} &middot; ${d.tipeFile || ''}</p></div>
-                    <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
-                row.querySelector('button').addEventListener('click', () => {
-                    if (!confirm('Hapus materi "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
+                    <div class="flex-shrink-0 flex items-center">${actionsHtml}</div>`;
+                const btnArchive = row.querySelector('.btn-archive');
+                if (btnArchive) btnArchive.addEventListener('click', () => {
+                    if (!confirm('Arsipkan materi "' + (d.judul || '') + '"? Materi akan disembunyikan dari website, tapi masih bisa dimunculkan lagi lewat tab Arsip.')) return;
+                    firebase.firestore().collection('edukasi').doc(doc.id).update({ arsip: true }).then(loadEduList);
+                });
+                const btnRestore = row.querySelector('.btn-restore');
+                if (btnRestore) btnRestore.addEventListener('click', () => {
+                    firebase.firestore().collection('edukasi').doc(doc.id).update({ arsip: false }).then(loadEduList);
+                });
+                const btnDelete = row.querySelector('.btn-delete');
+                if (btnDelete) btnDelete.addEventListener('click', () => {
+                    if (!confirm('Hapus PERMANEN materi "' + (d.judul || '') + '"? Tindakan ini gak bisa dibatalkan.')) return;
                     firebase.firestore().collection('edukasi').doc(doc.id).delete().then(loadEduList);
                 });
                 box.appendChild(row);
@@ -531,6 +593,19 @@ function loadEduList() {
         })
         .catch(() => { box.innerHTML = '<p class="text-sm text-error">Gagal memuat daftar.</p>'; });
 }
+document.querySelectorAll('.edu-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        eduTab = btn.dataset.tab;
+        document.querySelectorAll('.edu-tab-btn').forEach(b => {
+            const active = b.dataset.tab === eduTab;
+            b.classList.toggle('bg-primary', active);
+            b.classList.toggle('text-on-primary', active);
+            b.classList.toggle('bg-surface-container-low', !active);
+            b.classList.toggle('text-on-surface-variant', !active);
+        });
+        loadEduList();
+    });
+});
 
 // Upload SK (khusus Ketua PKK — dijamin juga lewat Firestore Security Rules)
 document.getElementById('skUploadForm').addEventListener('submit', function (e) {

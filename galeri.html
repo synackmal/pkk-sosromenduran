@@ -124,6 +124,7 @@ function loadGallery() {
         items = [];
         snap.forEach(doc => {
           const d = doc.data();
+          if (d.arsip) return; // item yang diarsipkan gak ditampilin ke publik
           items.push({ cat: d.kategori, title: d.judul, date: d.tanggal, icon: 'photo_camera', img: d.fotoUrl });
         });
         if (items.length === 0) items = DEMO_ITEMS;
