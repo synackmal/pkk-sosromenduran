@@ -424,7 +424,8 @@ document.getElementById('galeriUploadForm').addEventListener('submit', function 
     const path = 'galeri/' + Date.now() + '-' + file.name;
     uploadToCloudinary(file)
         .then(url => firebase.firestore().collection('galeri').add({
-            judul: judul, tanggal: tanggal, kategori: kategori, pokja: pokja, fotoUrl: url, fotoPath: path, arsip: false,
+            judul: judul, tanggal: tanggal, kategori: kategori, pokja: pokja, fotoUrl: url, fotoPath: path, arsi
+            p: false,
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         }))
         .then(() => {
