@@ -78,6 +78,7 @@
 <div class="side-link" data-page="page-galeri"><span class="material-symbols-outlined">photo_library</span>Kelola Galeri</div>
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
+<div class="side-link" data-page="page-link-pendataan"><span class="material-symbols-outlined">add_link</span>Kelola Link Pendataan</div>
 <div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 </nav>
 </div>
@@ -97,6 +98,7 @@
 <div class="side-link" data-page="page-galeri"><span class="material-symbols-outlined">photo_library</span>Kelola Galeri</div>
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
+<div class="side-link" data-page="page-link-pendataan"><span class="material-symbols-outlined">add_link</span>Kelola Link Pendataan</div>
 <div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 <a href="index.html" class="side-link" style="color:#8EF4E9;"><span class="material-symbols-outlined">visibility</span>Lihat Website</a>
 <div class="side-link" style="color:#FFB4A8;" onclick="dashLogout()"><span class="material-symbols-outlined">logout</span>Keluar</div>
@@ -216,11 +218,48 @@
 <!-- PAGE: Pantau Pendataan -->
 <div id="page-pendataan" class="dash-page">
 <h1 class="font-headline-lg text-headline-lg text-primary mb-2" style="font-size:24px;">Pantau Pendataan</h1>
-<p class="text-on-surface-variant mb-6">Klik salah satu kartu buat buka rekap data (Google Sheets) Pokja terkait.</p>
-<div id="dash-links" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+<p class="text-on-surface-variant mb-6">Klik salah satu bidang buat lihat daftar Form &amp; Sheet pendataannya.</p>
+<div id="dash-links" class="space-y-3"></div>
 <div class="mt-8 p-6 rounded-xl bg-surface-container-low border border-outline-variant flex items-start gap-3">
 <span class="material-symbols-outlined text-secondary">info</span>
-<p class="font-body-md text-body-md text-on-surface-variant">Link Google Sheets diset "hanya yang punya link" sebagai lapisan keamanan utama — pastikan itu tetap aktif.</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Link Google Sheets/Form diset "hanya yang punya link" sebagai lapisan keamanan utama — pastikan itu tetap aktif. Buat nambah link baru, buka menu "Kelola Link Pendataan".</p>
+</div>
+</div>
+
+<!-- PAGE: Kelola Link Pendataan (linktree per bidang) -->
+<div id="page-link-pendataan" class="dash-page">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2" style="font-size:24px;">Kelola Link Pendataan</h1>
+<p class="text-on-surface-variant mb-6">Tambah link Google Form (input data) atau Google Sheets (rekap data) untuk bidang yang bersangkutan.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Tambah Link</h3>
+<form id="linkUploadForm" class="space-y-4">
+<select id="link-bidang" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<option value="">Pilih Bidang</option>
+<option value="Pokja I">Pokja I</option>
+<option value="Pokja II">Pokja II</option>
+<option value="Pokja III">Pokja III</option>
+<option value="Pokja IV">Pokja IV</option>
+<option value="Kesekretariatan">Kesekretariatan</option>
+<option value="Keuangan">Keuangan</option>
+</select>
+<select id="link-tipe" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<option value="">Pilih Tipe</option>
+<option value="form">Google Form (input data)</option>
+<option value="sheet">Google Sheets (rekap data)</option>
+</select>
+<input type="text" id="link-label" placeholder="Nama link, contoh: Laporan Bulanan Oktober" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<input type="url" id="link-url" placeholder="https://..." required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<button type="submit" class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-label-md font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add_link</span>Tambah Link
+</button>
+<p id="link-upload-msg" class="text-sm"></p>
+</form>
+</div>
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Link Tersimpan</h3>
+<div id="link-list" class="space-y-2 max-h-96 overflow-y-auto"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
+</div>
 </div>
 </div>
 
@@ -287,25 +326,65 @@ function uploadToCloudinary(file) {
         .then(data => data.secure_url);
 }
 
-// Link rekap Google Sheets tiap Pokja — ganti '#' dengan link asli.
-const SHEETS_POKJA = [
-    { label: 'Rekap Pokja I', pokja: 'Pokja I', icon: 'account_balance', url: '#' },
-    { label: 'Rekap Pokja II', pokja: 'Pokja II', icon: 'school', url: '#' },
-    { label: 'Rekap Pokja III', pokja: 'Pokja III', icon: 'restaurant', url: '#' },
-    { label: 'Rekap Pokja IV', pokja: 'Pokja IV', icon: 'medical_services', url: 'https://docs.google.com/spreadsheets/d/1QTtDRY1oddpyKxWHwS3_kon5ONCk-0vM4pzFm6dYAfM/edit?usp=sharing' },
-    { label: 'Rekap Kesekretariatan', pokja: 'Kesekretariatan', icon: 'edit_document', url: '#' },
-    { label: 'Rekap Keuangan', pokja: 'Keuangan', icon: 'account_balance_wallet', url: '#' }
+// Daftar bidang (ikon buat tampilan doang, link-nya diambil dinamis dari Firestore)
+const BIDANG_LIST = [
+    { label: 'Pokja I', icon: 'account_balance' },
+    { label: 'Pokja II', icon: 'school' },
+    { label: 'Pokja III', icon: 'restaurant' },
+    { label: 'Pokja IV', icon: 'medical_services' },
+    { label: 'Kesekretariatan', icon: 'edit_document' },
+    { label: 'Keuangan', icon: 'account_balance_wallet' }
 ];
 const dashLinksBox = document.getElementById('dash-links');
-SHEETS_POKJA.forEach(s => {
-    const a = document.createElement('a');
-    a.href = s.url; a.target = '_blank'; a.rel = 'noopener';
-    a.dataset.pokja = s.pokja;
-    a.className = 'p-6 rounded-xl border border-outline-variant bg-white hover:shadow-lg hover:border-secondary transition-all flex items-center gap-4';
-    a.innerHTML = `<div class="w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center text-primary flex-shrink-0"><span class="material-symbols-outlined">${s.icon}</span></div>
-        <div><p class="font-headline-md text-headline-md text-primary text-lg">${s.label}</p><p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Buka Google Sheets &rarr;</p></div>`;
-    dashLinksBox.appendChild(a);
+BIDANG_LIST.forEach(b => {
+    const wrap = document.createElement('div');
+    wrap.className = 'bidang-accordion border border-outline-variant rounded-xl bg-white overflow-hidden';
+    wrap.dataset.pokja = b.label;
+    wrap.innerHTML = `
+        <button type="button" class="bidang-toggle w-full p-5 flex items-center gap-4 hover:bg-surface-container-low transition-colors">
+            <div class="w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center text-primary flex-shrink-0"><span class="material-symbols-outlined">${b.icon}</span></div>
+            <p class="font-headline-md text-headline-md text-primary text-lg flex-grow text-left">${b.label}</p>
+            <span class="material-symbols-outlined chevron transition-transform">expand_more</span>
+        </button>
+        <div class="bidang-panel px-5 pb-5 space-y-2" style="display:none;"><p class="text-sm text-on-surface-variant">Memuat...</p></div>`;
+    const toggle = wrap.querySelector('.bidang-toggle');
+    const panel = wrap.querySelector('.bidang-panel');
+    const chevron = wrap.querySelector('.chevron');
+    let loaded = false;
+    toggle.addEventListener('click', () => {
+        const isOpen = panel.style.display !== 'none';
+        panel.style.display = isOpen ? 'none' : 'block';
+        chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+        if (!isOpen && !loaded) {
+            loaded = true;
+            renderBidangLinks(b.label, panel);
+        }
+    });
+    dashLinksBox.appendChild(wrap);
 });
+
+function renderBidangLinks(bidang, panel) {
+    if (!cmsReady) { panel.innerHTML = '<p class="text-sm text-error">Firebase belum siap.</p>'; return; }
+    firebase.firestore().collection('pendataan_links').where('bidang', '==', bidang).orderBy('createdAt', 'desc').get()
+        .then(snap => {
+            if (snap.empty) { panel.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada link Form/Sheet untuk bidang ini.</p>'; return; }
+            panel.innerHTML = '';
+            snap.forEach(doc => {
+                const d = doc.data();
+                const isForm = d.tipe === 'form';
+                const row = document.createElement('a');
+                row.href = d.url; row.target = '_blank'; row.rel = 'noopener';
+                row.className = 'flex items-center gap-3 p-3 rounded-lg border border-outline-variant/50 hover:border-secondary hover:bg-surface-container-low transition-colors';
+                row.innerHTML = `<span class="material-symbols-outlined text-lg ${isForm ? 'text-secondary' : 'text-tertiary'}">${isForm ? 'edit_note' : 'table_chart'}</span>
+                    <span class="text-sm font-bold text-primary flex-grow">${d.label}</span>
+                    <span class="text-xs text-on-surface-variant">${isForm ? 'Form' : 'Sheet'}</span>
+                    <span class="material-symbols-outlined text-sm text-outline">open_in_new</span>`;
+                panel.appendChild(row);
+            });
+        })
+        .catch(() => { panel.innerHTML = '<p class="text-sm text-error">Gagal memuat link.</p>'; });
+}
+
 
 // Toggle lihat/sembunyi password
 document.getElementById('togglePassword').addEventListener('click', function () {
@@ -339,6 +418,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
             applyRoleRestrictions();
             loadGalList();
             loadEduList();
+            loadLinkList();
         })
         .catch(() => {
             errEl.textContent = 'Email atau kata sandi salah.';
@@ -369,9 +449,22 @@ function applyRoleRestrictions() {
     if (roleLabel) roleLabel.textContent = isKetua ? 'Ketua PKK (akses semua bidang)' : currentRole + ' (akses terbatas)';
 
     // Filter kartu Pantau Pendataan
-    document.querySelectorAll('#dash-links a').forEach(a => {
-        if (!isKetua && a.dataset.pokja !== currentRole) a.style.display = 'none';
+    document.querySelectorAll('.bidang-accordion').forEach(el => {
+        if (!isKetua && el.dataset.pokja !== currentRole) el.style.display = 'none';
     });
+
+    // Kunci dropdown Bidang di form Kelola Link Pendataan kalau bukan Ketua PKK
+    const linkBidangEl = document.getElementById('link-bidang');
+    if (linkBidangEl) {
+        if (!isKetua) {
+            linkBidangEl.value = currentRole;
+            linkBidangEl.disabled = true;
+            linkBidangEl.classList.add('bg-surface-container-low');
+        } else {
+            linkBidangEl.disabled = false;
+            linkBidangEl.classList.remove('bg-surface-container-low');
+        }
+    }
 
     // Menu "Kelola Dokumen SK" cuma buat Ketua PKK
     document.querySelectorAll('.ketua-only').forEach(el => {
@@ -663,6 +756,59 @@ function loadSkList() {
                 row.querySelector('button').addEventListener('click', () => {
                     if (!confirm('Hapus SK "' + (d.judul || '') + '" dari website? Tindakan ini gak bisa dibatalkan.')) return;
                     firebase.firestore().collection('dokumen_sk').doc(doc.id).delete().then(loadSkList);
+                });
+                box.appendChild(row);
+            });
+        })
+        .catch(() => { box.innerHTML = '<p class="text-sm text-error">Gagal memuat daftar.</p>'; });
+}
+
+// Upload Link Pendataan (Form/Sheet) — tiap bidang bisa nambah punya sendiri
+document.getElementById('linkUploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const bidang = document.getElementById('link-bidang').value;
+    const tipe = document.getElementById('link-tipe').value;
+    const label = document.getElementById('link-label').value;
+    const url = document.getElementById('link-url').value;
+    const msg = document.getElementById('link-upload-msg');
+
+    msg.textContent = 'Menyimpan...';
+    msg.className = 'text-sm text-on-surface-variant';
+
+    firebase.firestore().collection('pendataan_links').add({
+        bidang: bidang, tipe: tipe, label: label, url: url,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    })
+        .then(() => {
+            msg.textContent = 'Link berhasil ditambahkan!';
+            msg.className = 'text-sm text-secondary font-bold';
+            document.getElementById('linkUploadForm').reset();
+            if (currentRole !== 'ketua') document.getElementById('link-bidang').value = currentRole;
+            loadLinkList();
+        })
+        .catch(err => {
+            msg.textContent = 'Gagal menyimpan: ' + err.message;
+            msg.className = 'text-sm text-error';
+        });
+});
+
+function loadLinkList() {
+    const box = document.getElementById('link-list');
+    if (!box || !cmsReady) return;
+    firebase.firestore().collection('pendataan_links').orderBy('createdAt', 'desc').get()
+        .then(snap => {
+            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().bidang === currentRole);
+            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada link.</p>'; return; }
+            box.innerHTML = '';
+            docs.forEach(doc => {
+                const d = doc.data();
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
+                row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.label || '(tanpa nama)'}</p><p class="text-xs text-on-surface-variant">${d.bidang || ''} &middot; ${d.tipe === 'form' ? 'Form' : 'Sheet'}</p></div>
+                    <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
+                row.querySelector('button').addEventListener('click', () => {
+                    if (!confirm('Hapus link "' + (d.label || '') + '"?')) return;
+                    firebase.firestore().collection('pendataan_links').doc(doc.id).delete().then(loadLinkList);
                 });
                 box.appendChild(row);
             });
