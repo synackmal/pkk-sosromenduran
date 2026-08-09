@@ -72,17 +72,55 @@
 <div class="space-y-6">
 <div class="rounded-xl border border-outline-variant bg-white p-6">
 <div class="w-12 h-12 bg-primary-fixed rounded-lg flex items-center justify-center text-primary mb-4"><span class="material-symbols-outlined">assignment</span></div>
-<h3 class="font-headline-md text-headline-md text-primary text-lg mb-2">Pendataan Pokja IV — Rakernas</h3>
+<h3 class="font-headline-md text-headline-md text-primary text-lg mb-2">Pendataan Pokja IV</h3>
 <p class="text-on-surface-variant text-sm mb-4">Isi data kegiatan lewat Google Form berikut.</p>
-<a href="https://forms.gle/iytkm25jLLp6ZHHW7" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 rounded-lg font-label-md text-label-md hover:opacity-90 transition-all">Buka Google Form<span class="material-symbols-outlined text-sm">open_in_new</span></a>
+<div id="form-list" class="space-y-2"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
 </div>
 </div>
 </div>
 </section>
 </main>
 <div id="footer-placeholder"></div>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script>
-
+(function () {
+    var box = document.getElementById('form-list');
+    if (!box) return;
+    try {
+        if (!window.firebaseConfig || !window.firebaseConfig.apiKey || window.firebaseConfig.apiKey.indexOf('GANTI_DENGAN') === 0) {
+            box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada Form yang ditambahkan.</p>';
+            return;
+        }
+        if (!firebase.apps.length) firebase.initializeApp(window.firebaseConfig);
+        firebase.firestore().collection('pendataan_links').orderBy('createdAt', 'desc').get()
+            .then(function (snap) {
+                var docs = snap.docs.filter(function (doc) {
+                    var d = doc.data();
+                    return d.bidang === 'Pokja IV' && d.tipe === 'form';
+                });
+                if (docs.length === 0) {
+                    box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada Form yang ditambahkan.</p>';
+                    return;
+                }
+                box.innerHTML = '';
+                docs.forEach(function (doc) {
+                    var d = doc.data();
+                    var a = document.createElement('a');
+                    a.href = d.url; a.target = '_blank'; a.rel = 'noopener';
+                    a.className = 'w-full flex items-center justify-center gap-2 bg-primary text-on-primary py-2.5 rounded-lg font-label-md text-label-md hover:opacity-90 transition-all mb-2';
+                    a.innerHTML = (d.label || 'Buka Google Form') + ' <span class="material-symbols-outlined text-sm">open_in_new</span>';
+                    box.appendChild(a);
+                });
+            })
+            .catch(function () {
+                box.innerHTML = '<p class="text-sm text-error">Gagal memuat Form.</p>';
+            });
+    } catch (e) {
+        box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada Form yang ditambahkan.</p>';
+    }
+})();
 </script>
 <script src="include.js"></script>
 </body></html>
