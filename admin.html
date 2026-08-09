@@ -79,6 +79,7 @@
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
 <div class="side-link" data-page="page-link-pendataan"><span class="material-symbols-outlined">add_link</span>Kelola Link Pendataan</div>
+<div class="side-link" data-page="page-dokumen-bidang"><span class="material-symbols-outlined">folder_open</span>Kelola Dokumen Bidang</div>
 <div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 </nav>
 </div>
@@ -99,6 +100,7 @@
 <div class="side-link" data-page="page-materi"><span class="material-symbols-outlined">menu_book</span>Kelola Materi</div>
 <div class="side-link" data-page="page-pendataan"><span class="material-symbols-outlined">query_stats</span>Pantau Pendataan</div>
 <div class="side-link" data-page="page-link-pendataan"><span class="material-symbols-outlined">add_link</span>Kelola Link Pendataan</div>
+<div class="side-link" data-page="page-dokumen-bidang"><span class="material-symbols-outlined">folder_open</span>Kelola Dokumen Bidang</div>
 <div class="side-link ketua-only" data-page="page-dokumen" style="display:none;"><span class="material-symbols-outlined">description</span>Kelola Dokumen SK</div>
 <a href="index.html" class="side-link" style="color:#8EF4E9;"><span class="material-symbols-outlined">visibility</span>Lihat Website</a>
 <div class="side-link" style="color:#FFB4A8;" onclick="dashLogout()"><span class="material-symbols-outlined">logout</span>Keluar</div>
@@ -264,6 +266,39 @@
 </div>
 
 <!-- PAGE: Kelola Dokumen SK (khusus Ketua PKK) -->
+<!-- PAGE: Kelola Dokumen Bidang (semua bidang bisa upload dokumen resmi sendiri) -->
+<div id="page-dokumen-bidang" class="dash-page">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2" style="font-size:24px;">Kelola Dokumen Bidang</h1>
+<p class="text-on-surface-variant mb-6">Upload dokumen resmi (lembar disposisi, laporan, dll) yang otomatis muncul di halaman bidang masing-masing.</p>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Tambah Dokumen</h3>
+<form id="dokBidangUploadForm" class="space-y-4">
+<select id="dokbid-pokja" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<option value="">Pilih Bidang</option>
+<option value="Pokja I">Pokja I</option>
+<option value="Pokja II">Pokja II</option>
+<option value="Pokja III">Pokja III</option>
+<option value="Pokja IV">Pokja IV</option>
+<option value="Kesekretariatan">Kesekretariatan</option>
+<option value="Keuangan">Keuangan</option>
+</select>
+<input type="text" id="dokbid-judul" placeholder="Judul dokumen, contoh: Lembar Disposisi Oktober" required class="w-full px-4 py-2.5 rounded-lg border border-outline outline-none focus:border-primary">
+<label class="text-sm text-on-surface-variant block">File dokumen (PDF/Word/PPT)</label>
+<input type="file" id="dokbid-file" accept=".pdf,.doc,.docx,.ppt,.pptx" required class="w-full text-sm">
+<button type="submit" class="w-full bg-primary text-on-primary py-2.5 rounded-lg font-label-md font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" id="dokbid-submit-icon">upload</span><span id="dokbid-submit-text">Upload Dokumen</span>
+</button>
+<p id="dokbid-upload-msg" class="text-sm"></p>
+</form>
+</div>
+<div class="p-6 rounded-xl border border-outline-variant bg-white">
+<h3 class="font-headline-md text-headline-md text-primary mb-4" style="font-size:16px;">Dokumen Tersimpan</h3>
+<div id="dokbid-list" class="space-y-2 max-h-96 overflow-y-auto"><p class="text-sm text-on-surface-variant">Memuat...</p></div>
+</div>
+</div>
+</div>
+
 <div id="page-dokumen" class="dash-page">
 <h1 class="font-headline-lg text-headline-lg text-primary mb-2" style="font-size:24px;">Kelola Dokumen SK</h1>
 <p class="text-on-surface-variant mb-6">Upload Surat Keputusan (SK) baru yang otomatis muncul di halaman Dokumen. Menu ini cuma bisa diakses Ketua PKK.</p>
@@ -466,6 +501,20 @@ function applyRoleRestrictions() {
             linkBidangEl.classList.remove('bg-surface-container-low');
         }
     }
+
+    // Kunci dropdown Bidang di form Kelola Dokumen Bidang kalau bukan Ketua PKK
+    const dokbidPokjaEl = document.getElementById('dokbid-pokja');
+    if (dokbidPokjaEl) {
+        if (!isKetua) {
+            dokbidPokjaEl.value = currentRole;
+            dokbidPokjaEl.disabled = true;
+            dokbidPokjaEl.classList.add('bg-surface-container-low');
+        } else {
+            dokbidPokjaEl.disabled = false;
+            dokbidPokjaEl.classList.remove('bg-surface-container-low');
+        }
+    }
+    loadDokBidList();
 
     // Menu "Kelola Dokumen SK" cuma buat Ketua PKK
     document.querySelectorAll('.ketua-only').forEach(el => {
@@ -810,6 +859,67 @@ function loadLinkList() {
                 row.querySelector('button').addEventListener('click', () => {
                     if (!confirm('Hapus link "' + (d.label || '') + '"?')) return;
                     firebase.firestore().collection('pendataan_links').doc(doc.id).delete().then(loadLinkList);
+                });
+                box.appendChild(row);
+            });
+        })
+        .catch(() => { box.innerHTML = '<p class="text-sm text-error">Gagal memuat daftar.</p>'; });
+}
+
+// Upload Dokumen Bidang (tiap bidang bisa upload dokumen resmi sendiri)
+document.getElementById('dokBidangUploadForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const file = document.getElementById('dokbid-file').files[0];
+    const pokja = document.getElementById('dokbid-pokja').value;
+    const judul = document.getElementById('dokbid-judul').value;
+    const msg = document.getElementById('dokbid-upload-msg');
+    const icon = document.getElementById('dokbid-submit-icon');
+    if (!file) return;
+
+    msg.textContent = 'Mengupload...';
+    msg.className = 'text-sm text-on-surface-variant';
+    icon.textContent = 'hourglass_top';
+
+    const tipeFile = file.name.split('.').pop().toUpperCase();
+    const filePath = 'dokumen-bidang/' + Date.now() + '-' + file.name;
+
+    uploadToCloudinary(file)
+        .then(fileUrl => firebase.firestore().collection('dokumen_bidang').add({
+            judul: judul, pokja: pokja, tipeFile: tipeFile, fileUrl: fileUrl, filePath: filePath,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }))
+        .then(() => {
+            msg.textContent = 'Berhasil diupload! Cek halaman bidang terkait.';
+            msg.className = 'text-sm text-secondary font-bold';
+            icon.textContent = 'upload';
+            document.getElementById('dokBidangUploadForm').reset();
+            if (currentRole !== 'ketua') document.getElementById('dokbid-pokja').value = currentRole;
+            loadDokBidList();
+        })
+        .catch(err => {
+            msg.textContent = 'Gagal upload: ' + err.message;
+            msg.className = 'text-sm text-error';
+            icon.textContent = 'upload';
+        });
+});
+
+function loadDokBidList() {
+    const box = document.getElementById('dokbid-list');
+    if (!box || !cmsReady) return;
+    firebase.firestore().collection('dokumen_bidang').orderBy('createdAt', 'desc').get()
+        .then(snap => {
+            const docs = snap.docs.filter(doc => currentRole === 'ketua' || doc.data().pokja === currentRole);
+            if (docs.length === 0) { box.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada dokumen.</p>'; return; }
+            box.innerHTML = '';
+            docs.forEach(doc => {
+                const d = doc.data();
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 p-2 rounded-lg border border-outline-variant/50';
+                row.innerHTML = `<div class="min-w-0"><p class="text-sm font-bold text-primary truncate">${d.judul || '(tanpa judul)'}</p><p class="text-xs text-on-surface-variant">${d.pokja || ''} &middot; ${d.tipeFile || ''}</p></div>
+                    <button type="button" class="text-error hover:bg-error-container p-2 rounded-lg flex-shrink-0" aria-label="Hapus"><span class="material-symbols-outlined text-[18px]">delete</span></button>`;
+                row.querySelector('button').addEventListener('click', () => {
+                    if (!confirm('Hapus dokumen "' + (d.judul || '') + '"?')) return;
+                    firebase.firestore().collection('dokumen_bidang').doc(doc.id).delete().then(loadDokBidList);
                 });
                 box.appendChild(row);
             });
