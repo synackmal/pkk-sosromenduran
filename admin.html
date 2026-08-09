@@ -365,11 +365,12 @@ BIDANG_LIST.forEach(b => {
 
 function renderBidangLinks(bidang, panel) {
     if (!cmsReady) { panel.innerHTML = '<p class="text-sm text-error">Firebase belum siap.</p>'; return; }
-    firebase.firestore().collection('pendataan_links').where('bidang', '==', bidang).orderBy('createdAt', 'desc').get()
+    firebase.firestore().collection('pendataan_links').orderBy('createdAt', 'desc').get()
         .then(snap => {
-            if (snap.empty) { panel.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada link Form/Sheet untuk bidang ini.</p>'; return; }
+            const docs = snap.docs.filter(doc => doc.data().bidang === bidang);
+            if (docs.length === 0) { panel.innerHTML = '<p class="text-sm text-on-surface-variant">Belum ada link Form/Sheet untuk bidang ini.</p>'; return; }
             panel.innerHTML = '';
-            snap.forEach(doc => {
+            docs.forEach(doc => {
                 const d = doc.data();
                 const isForm = d.tipe === 'form';
                 const row = document.createElement('a');
